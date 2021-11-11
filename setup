@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -exou pipefail
+
+# python3 is installed by default in Ubuntu 20.04 LTS
+sudo apt -y install mypy
+sudo apt -y install black
+sudo apt -y install isort
+
+sudo mkdir -p /usr/"$USER"
+sudo cp py /usr/"$USER"
+sudo chmod +x /usr/"$USER"/py
+echo "export PATH=\"/usr/\$USER:\$PATH\"" >> ~/.profile
+source ~/.profile
