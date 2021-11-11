@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -eoux pipefail
-filename=${1:-.}
+filename=${1:-_}
 if [ $# -eq 0 ]
     then
         mypy .
