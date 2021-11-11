@@ -2,9 +2,9 @@
 set -exou pipefail
 
 # python3 is installed by default in Ubuntu 20.04 LTS
-sudo apt -y install mypy
-sudo apt -y install black
-sudo apt -y install isort
+pip3 install mypy
+pip3 install black
+pip3 install isort
 
 sudo mkdir -p /usr/"$USER"
 sudo cp py /usr/"$USER"
