@@ -36,7 +36,7 @@ Hello, bash!
 + set +x
 ```
 
-Note that even when you pass a Python file, `py` still formates and type checks all files recusively in the current directory.
+Note that even when you pass a Python file, `py` still formats and type checks all files recusively in the current directory.
 
 # Setup
 
