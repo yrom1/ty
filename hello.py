@@ -1,4 +1,5 @@
-import abc
 import json
+import abc
 
-print("Hello, bash!")
+print(
+    "Hello, bash!")

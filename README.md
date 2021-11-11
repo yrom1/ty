@@ -5,14 +5,35 @@ Mypy, Black, isort, Python, all in one `py` command.
 
 You can use `py` bare to run `mypy`, `black`, and `isort` in your current directory to recursively format the files:
 
-```bash
-py
+```
+$ py
++ mypy .
+Success: no issues found in 1 source file
++ python3 -m black .
+reformatted hello.py
+All done! ✨ 🍰 ✨
+1 file reformatted.
++ python3 -m isort .
+Fixing /home/ryan/py/hello.py
+Skipped 2 files
++ set +x
 ```
 
 Or you can pass a Python file to run that file after doing the formatting above:
 
-```bash
-py hello.py
+```
+$ py hello.py 
++ python3 -m mypy hello.py
+Success: no issues found in 1 source file
++ python3 -m black hello.py
+reformatted hello.py
+All done! ✨ 🍰 ✨
+1 file reformatted.
++ python3 -m isort hello.py
+Fixing /home/ryan/py/hello.py
++ python3 hello.py
+Hello, bash!
++ set +x
 ```
 
 # Setup
