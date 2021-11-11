@@ -3,7 +3,7 @@ Mypy, Black, isort, Python, all in one `py` command.
 
 # Usage
 
-You can use `py` bare to run `mypy`, `black`, and `isort` in your current directory to recursively format the files:
+You can use `py` bare to recursively run `mypy`, `black`, and `isort` in the current directory:
 
 ```
 $ py
@@ -19,7 +19,7 @@ Skipped 2 files
 + set +x
 ```
 
-Or you can pass a Python file to run that file after doing the formatting above:
+Or, you can pass a Python file to `py` to run that file, after doing the formatting and type checking described above:
 
 ```
 $ py hello.py 
@@ -35,6 +35,8 @@ Fixing /home/ryan/py/hello.py
 Hello, bash!
 + set +x
 ```
+
+Note that even when you pass a Python file, `py` still formates and type checks all files recusively in the current directory.
 
 # Setup
 
