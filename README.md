@@ -47,7 +47,7 @@ chmod +x setup
 source ./setup
 ```
 
-Then reboot. That's it.
+That's it.
 
 If you switch to a different Python virtual environment, you'll need to reinstall `Black`, `mypy`, and `isort`. Either manually, or with:
 

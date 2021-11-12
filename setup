@@ -9,5 +9,5 @@ pip3 install isort
 sudo mkdir -p /usr/"$USER"
 sudo cp py /usr/"$USER"
 sudo chmod +x /usr/"$USER"/py
-echo "export PATH=\"/usr/\$USER:\$PATH\"" >> ~/.profile
-source ~/.profile
+echo "export PATH=\"/usr/\$USER:\$PATH\"" >> ~/.bashrc
+source ~/.bashrc
