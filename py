@@ -7,7 +7,6 @@ if [ $# -eq 0 ]
         mypy .
         python3 -m black .
         python3 -m isort .
-        set +x
         exit 0
     else
         set -x
@@ -15,6 +14,5 @@ if [ $# -eq 0 ]
         python3 -m black $filename
         python3 -m isort $filename
         python3 $filename
-        set +x
         exit 0
 fi

@@ -16,7 +16,7 @@ All done! ✨ 🍰 ✨
 + python3 -m isort .
 Fixing /home/ryan/py/hello.py
 Skipped 2 files
-+ set +x
++ exit 0
 ```
 
 Or, you can pass a Python file to `py` to run that file, after doing the formatting and type checking described above:
@@ -33,7 +33,7 @@ All done! ✨ 🍰 ✨
 Fixing /home/ryan/py/hello.py
 + python3 hello.py
 Hello, bash!
-+ set +x
++ exit 0
 ```
 
 Note that even when you pass a Python file, `py` still formats and type checks all files recusively in the current directory.
