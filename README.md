@@ -9,13 +9,13 @@ You can use `py` bare to recursively run `mypy`, `black`, and `isort` in the cur
 $ py
 + mypy .
 Success: no issues found in 1 source file
++ python3 -m isort .
+Fixing /home/ryan/py/hello.py
+Skipped 2 files
 + python3 -m black .
 reformatted hello.py
 All done! ✨ 🍰 ✨
 1 file reformatted.
-+ python3 -m isort .
-Fixing /home/ryan/py/hello.py
-Skipped 2 files
 ```
 
 Or, you can pass a Python file to `py` to run that file, after doing the formatting and type checking described above:
@@ -24,12 +24,12 @@ Or, you can pass a Python file to `py` to run that file, after doing the formatt
 $ py hello.py 
 + python3 -m mypy hello.py
 Success: no issues found in 1 source file
++ python3 -m isort hello.py
+Fixing /home/ryan/py/hello.py
 + python3 -m black hello.py
 reformatted hello.py
 All done! ✨ 🍰 ✨
 1 file reformatted.
-+ python3 -m isort hello.py
-Fixing /home/ryan/py/hello.py
 + python3 hello.py
 Hello, bash!
 ```
