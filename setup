@@ -9,5 +9,9 @@ pip3 install isort
 sudo mkdir -p /usr/"$USER"
 sudo cp py /usr/"$USER"
 sudo chmod +x /usr/"$USER"/py
-echo "export PATH=\"/usr/\$USER:\$PATH\"" >> ~/.bashrc
+grep -q 'export PATH=\"/usr/\$USER:\$PATH\"' ~/.bashrc # 0 is found, 1 is not found
+grep_return=$?
+if [[ $grep_return == 1 ]]; then
+    echo "export PATH=\"/usr/\$USER:\$PATH\"" >> ~/.bashrc
+fi
 source ~/.bashrc
