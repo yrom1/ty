@@ -18,7 +18,7 @@ All done! ✨ 🍰 ✨
 1 file reformatted.
 ```
 
-Or, you can pass a Python file to `py` to run that file, after doing the formatting and type checking described above:
+Or, you can pass a Python file to `py` to run `mypy`, `black`, and `isort` on that file, and then run the file in python:
 
 ```
 $ py hello.py 
@@ -33,8 +33,6 @@ All done! ✨ 🍰 ✨
 + python3 hello.py
 Hello, bash!
 ```
-
-Note that even when you pass a Python file, `py` still formats and type checks all files recusively in the current directory.
 
 # Setup
 
