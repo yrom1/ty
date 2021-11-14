@@ -18,7 +18,7 @@ All done! ✨ 🍰 ✨
 1 file reformatted.
 ```
 
-Or, you can pass a Python file to `py` to run `mypy`, `black`, and `isort` on that file, and then run the file in python:
+Or, you can pass a Python file to `py` to run `mypy`, `black`, and `isort` on that file, and then run the file with `python3`:
 
 ```
 $ py hello.py 
