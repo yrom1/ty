@@ -1,5 +1,5 @@
 # py
-Mypy, Black, isort, Python, all in one `py` command. 
+`py` lets you run Mypy, isort, Black, and Python, all in one command.
 
 # Usage
 
