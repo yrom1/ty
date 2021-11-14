@@ -7,7 +7,7 @@ You can use `py` bare to recursively run `mypy`, `black`, and `isort` in the cur
 
 ```
 $ py
-+ mypy .
++ python3 -m mypy .
 Success: no issues found in 1 source file
 + python3 -m isort .
 Fixing /home/ryan/py/hello.py
