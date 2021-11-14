@@ -4,7 +4,7 @@ filename=${1:-_}
 if [ $# -eq 0 ]
     then
         set -x
-        mypy .
+        python3 -m mypy .
         python3 -m isort .
         python3 -m black .
     else
