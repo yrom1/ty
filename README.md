@@ -15,7 +15,7 @@ Given this file, `test.py`:
 import sys
 
 print(sys.argv)
-print(__debug__) # default is True, using `python3 -O` makes __debug__ false
+print(__debug__) # default is True
 ```
 
 After setup, running `py -i -O test.py 1 2 3` will give:
