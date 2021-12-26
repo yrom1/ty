@@ -6,7 +6,6 @@ args=("$@")
 for i in "${!args[@]}"
 do
   if [[ ${args[$i]} == *.py ]]; then
-    echo found python file at $i
     pre_file_args=${args[@]:0:$i}
     file=${args[$i]}
     post_file_args=${args[@]:$i + 1:${#args[@]}}

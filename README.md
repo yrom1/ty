@@ -1,38 +1,40 @@
 # py
-`py` lets you run Mypy, isort, Black, and Python, all in one command.
+`py` = `mypy` + `isort` + `black` + `python3`, in one command.
 
 # Usage
 
-You can use `py` bare to recursively run `mypy`, `black`, and `isort` in the current directory:
+You can use the command `py` to run `mypy`, `isort`, then `black` in the current directory recursively.
+
+Or, you can pass a Python file to `py` to run those programs, and then execute the file with `python3`.
+
+# Example
+
+Given this file, `test.py`:
+
+```py
+import sys
+
+print(sys.argv)
+print(__debug__) # default is True, using `python3 -O` makes __debug__ false
+```
+
+After setup, running `py -i -O test.py 1 2 3` will give:
 
 ```
-$ py
-+ python3 -m mypy .
+$ py -i -O test.py 1 2 3
++ python3 -m mypy test.py
 Success: no issues found in 1 source file
-+ python3 -m isort .
-Fixing /home/ryan/py/hello.py
-Skipped 2 files
-+ python3 -m black .
-reformatted hello.py
++ python3 -m isort test.py
++ python3 -m black test.py
 All done! ✨ 🍰 ✨
-1 file reformatted.
+1 file left unchanged.
++ python3 -i -O test.py 1 2 3
+['test.py', '1', '2', '3']
+False
+>>>
 ```
 
-Or, you can pass a Python file to `py` to run `mypy`, `black`, and `isort` on that file, and then run the file with `python3`:
-
-```
-$ py hello.py 
-+ python3 -m mypy hello.py
-Success: no issues found in 1 source file
-+ python3 -m isort hello.py
-Fixing /home/ryan/py/hello.py
-+ python3 -m black hello.py
-reformatted hello.py
-All done! ✨ 🍰 ✨
-1 file reformatted.
-+ python3 hello.py
-Hello, bash!
-```
+`py` acts like `python3`, passing arguments as expected.
 
 # Setup
 
@@ -43,11 +45,4 @@ chmod +x setup
 source ./setup
 ```
 
-That's it.
-
-If you switch to a different Python virtual environment, you'll need to reinstall `Black`, `mypy`, and `isort`. Either manually, or with:
-
-```
-pip3 install -r requirements.txt
-```
-
+That's it!
