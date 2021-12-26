@@ -9,6 +9,7 @@ do
     pre_file_args=${args[@]:0:$i}
     file=${args[$i]}
     post_file_args=${args[@]:$i + 1:${#args[@]}}
+    break
   fi
 done
 
