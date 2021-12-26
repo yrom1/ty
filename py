@@ -3,9 +3,8 @@
 # TODO cant parse things between ./py and test.py like for example:
 #      in "./py -i test.py hi" the -i flag is helpful sometimes
 set -eou pipefail
-length=$(($#-1))
-args=${@:1:$length}
-filename="${@: -1}"
+args="${@:2}"
+filename=$1
 # echo args $args
 # echo filename $filename
 if [ $# -eq 0 ]
