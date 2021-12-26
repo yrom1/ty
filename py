@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
+# USAGE: ./py -i test.py
 set -eou pipefail
-filename=${1:-_}
+length=$(($#-1))
+args=${@:1:$length}
+filename="${@: -1}"
+# echo args $args
+# echo filename $filename
 if [ $# -eq 0 ]
     then
         set -x
@@ -12,5 +17,5 @@ if [ $# -eq 0 ]
         python3 -m mypy $filename
         python3 -m isort $filename
         python3 -m black $filename
-        python3 $filename
+        python3 $args $filename
 fi
