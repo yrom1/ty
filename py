@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# USAGE: ./py -i test.py
+# USAGE: ./py test.py hi
+# TODO cant parse things between ./py and test.py like for example:
+#      in "./py -i test.py hi" the -i flag is helpful sometimes
 set -eou pipefail
 length=$(($#-1))
 args=${@:1:$length}
@@ -17,5 +19,5 @@ if [ $# -eq 0 ]
         python3 -m mypy $filename
         python3 -m isort $filename
         python3 -m black $filename
-        python3 $args $filename
+        python3 $filename $args
 fi
