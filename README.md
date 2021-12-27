@@ -3,7 +3,7 @@
 
 # Usage
 
-You can use the command `py` to run `mypy`, `isort`, and `black` in the current directory recursively; Or, you can pass a Python file to `py` to run `mypy`, `isort`, and `black` on a file, and then execute the file with `python3`.
+You can use the command `py` to run `mypy`, `isort`, and `black` in the current directory recursively; Or, you can pass a Python file to `py` to run `mypy`, `isort`, and `black` on that file, and then execute the file with `python3`.
 
 # Example
 
