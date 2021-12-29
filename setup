@@ -2,8 +2,8 @@
 set -exou pipefail
 
 sudo mkdir -p /usr/"$USER"
-sudo cp py /usr/"$USER"
-sudo chmod +x /usr/"$USER"/py
+sudo cp ry /usr/"$USER"
+sudo chmod +x /usr/"$USER"/ry
 
 set +x
 echo + cat requirements.txt
@@ -22,12 +22,12 @@ if [[ $grep_return == 1 ]]; then
 fi
 
 set +e
-grep -q 'export PY=\"python3\"' ~/.bashrc
+grep -q 'export RY=\"py\"' ~/.bashrc
 grep_return=$?
 set -e
 if [[ $grep_return == 1 ]]; then
-    echo "export PY=\"python3\"" >> ~/.bashrc
+    echo "export RY=\"py\"" >> ~/.bashrc
 fi
 
 set +xH
-printf "🐍 success! restart terminal to use py\n"
+printf "🐍 success! restart terminal to use ry\n"
