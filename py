@@ -1,11 +1,21 @@
 #!/usr/bin/env bash
-# USAGE: ./py -i test.py hi
 set -eou pipefail
-python3=$PY
 
+pyhelp=0
+quiet=0
 args=("$@")
 for i in "${!args[@]}"
 do
+  if [[ ${args[$i]} == -h || ${args[$i]} == --help ]]; then
+    pyhelp=1
+    break
+  fi
+
+  if [[ ${args[$i]} == -q ]]
+  then
+    quiet=1
+  fi
+
   if [[ ${args[$i]} == *.py ]]; then
     pre_file_args=${args[@]:0:$i}
     file=${args[$i]}
@@ -14,16 +24,75 @@ do
   fi
 done
 
-if [ $# -eq 0 ]
+if [[ pyhelp -eq 1 ]]; then
+cat << _EOT_
+py [-h] [python arguments] [file.py] [file.py arguments]
+
+py = mypy + isort + black + python
+
+Without argument file:   Run py recursively in the current directory.
+With argument file:      Run py on the provided file.
+
+\`py\` acts the same as \`python\` otherwise.
+
+-h, ---help   show this message
+-q            supresses non-error output
+_EOT_
+exit 1
+fi
+
+if [[ $PY == "" ]]; then
+  echo PY env variable not set, default-ing to python3
+  PY="python3"
+fi
+
+if [[ quiet -eq 1 ]]
   then
-    set -x
-    python3 -m mypy .
-    python3 -m isort .
-    python3 -m black .
+    # quiet flag is the same for python3, isort, and black
+    # mypy doesn't have a quiet flag :( see workaround below
+    quiet_flag="-q"
   else
-    set -x
-    python3 -m mypy $file
-    python3 -m isort $file
-    python3 -m black $file
-    python3 $pre_file_args $file $post_file_args
+    quiet_flag=""
+fi
+
+# TODO manual set -x
+# TODO mypy color output --color-output
+# just ignore all arguments except -q if no file.py given ¯\_(ツ)_/¯
+
+run_mypy () {
+  mypy_output=$($PY -m mypy $1)
+  mypy_exit_code=$?
+  if [[ $mypy_exit_code -eq 1 ]]; then
+    echo $mypy_output
+    exit 1
+  fi
+}
+
+if [[ $# -eq 0 ]] || \
+[[ $# -eq 1 && $1 == -q ]] || \
+[[ $# -eq 1 && $1 == -h || $# -eq 1 && $1 == --help ]]
+  then
+    #set -x
+    set +e
+    run_mypy .
+    set -e
+    $PY -m isort $quiet_flag .
+    $PY -m black $quiet_flag .
+  else
+    #set -x
+    set +e
+    run_mypy $file
+    # mypy_output=$($PY -m mypy $file)
+    # mypy_exit_code=$?
+    # if [[ $mypy_exit_code -eq 1 ]]; then
+    #   echo $mypy_output
+    #   exit 1
+    # fi
+    set -e
+    $PY -m isort $quiet_flag $file
+    $PY -m black $quiet_flag $file
+    # don't pass the quiet flag to python, I'm exploiting
+    # the fact our quiet flag is the same as python's "-q"
+    # so it's in pre_file_args already
+    $PY $pre_file_args $file $post_file_args
 fi
