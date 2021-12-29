@@ -24,7 +24,7 @@ do
   fi
 done
 
-if [[ pyhelp -eq 1 ]]; then
+if [[ $pyhelp -eq 1 ]]; then
 cat << _EOT_
 py [-h] [python arguments] [file.py] [file.py arguments]
 
@@ -46,7 +46,7 @@ if [[ $PY == "" ]]; then
   PY="python3"
 fi
 
-if [[ quiet -eq 1 ]]
+if [[ $quiet -eq 1 ]]
   then
     # quiet flag is the same for python3, isort, and black
     # mypy doesn't have a quiet flag :( see workaround below
@@ -60,12 +60,21 @@ fi
 # just ignore all arguments except -q if no file.py given ¯\_(ツ)_/¯
 
 run_mypy () {
-  mypy_output=$($PY -m mypy $1)
-  mypy_exit_code=$?
-  if [[ $mypy_exit_code -eq 1 ]]; then
+  set +e
+  local mypy_output=$($PY -m mypy $1)
+  local mypy_exit_code=$?
+
+  if [[ $mypy_exit_code -eq 0 && $quiet -eq 0 ]]
+  then
+    echo $mypy_output
+  fi
+
+  if [[ $mypy_exit_code -eq 1 ]]
+  then
     echo $mypy_output
     exit 1
   fi
+  set -e
 }
 
 if [[ $# -eq 0 ]] || \
@@ -73,22 +82,12 @@ if [[ $# -eq 0 ]] || \
 [[ $# -eq 1 && $1 == -h || $# -eq 1 && $1 == --help ]]
   then
     #set -x
-    set +e
     run_mypy .
-    set -e
     $PY -m isort $quiet_flag .
     $PY -m black $quiet_flag .
   else
     #set -x
-    set +e
     run_mypy $file
-    # mypy_output=$($PY -m mypy $file)
-    # mypy_exit_code=$?
-    # if [[ $mypy_exit_code -eq 1 ]]; then
-    #   echo $mypy_output
-    #   exit 1
-    # fi
-    set -e
     $PY -m isort $quiet_flag $file
     $PY -m black $quiet_flag $file
     # don't pass the quiet flag to python, I'm exploiting
