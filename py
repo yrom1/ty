@@ -55,12 +55,11 @@ if [[ $quiet -eq 1 ]]
     quiet_flag=""
 fi
 
-# TODO mypy color output --color-output
 # just ignore all arguments except -q if no file.py given ¯\_(ツ)_/¯
 
 run_mypy () {
   if [[ $quiet -eq 0 ]]; then
-      printf "+ $PY -m mypy --pretty $1\n"
+      printf "+ $PY -m mypy $1\n"
   fi
 
   set +e
@@ -71,12 +70,12 @@ run_mypy () {
 
   if [[ $mypy_exit_code -eq 0 && $quiet -eq 0 ]]
   then
-    echo "$mypy_output"
+    printf "$mypy_output\n"
   fi
 
   if [[ $mypy_exit_code -eq 1 ]]
   then
-    echo "$mypy_output"
+    printf "$mypy_output\n"
     exit 1
   fi
 }
