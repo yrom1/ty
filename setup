@@ -1,22 +1,30 @@
 #!/usr/bin/env bash
-#set -exou pipefail
-set -x
+set -exou pipefail
 
 sudo mkdir -p /usr/"$USER"
 sudo cp py /usr/"$USER"
 sudo chmod +x /usr/"$USER"/py
 
-pip3 install -r requirements.txt
+set +x
+echo installing requirements 🐍
+echo + cat requirements.txt
+echo "$(cat requirements.txt)"
+please_be_quiet=$(pip3 -q -q -q install -r requirements.txt 2>&1)
+set -x
 
 # 0 is found, 1 is not found
+set +e
 grep -q 'export PATH=\"/usr/\$USER:\$PATH\"' ~/.bashrc
 grep_return=$?
+set -e
 if [[ $grep_return == 1 ]]; then
     echo "export PATH=\"/usr/\$USER:\$PATH\"" >> ~/.bashrc
 fi
 
+set +e
 grep -q 'export PY=\"python3\"' ~/.bashrc
 grep_return=$?
+set -e
 if [[ $grep_return == 1 ]]; then
     echo "export PY=\"python3\"" >> ~/.bashrc
 fi
