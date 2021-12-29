@@ -20,10 +20,11 @@ With one file argument:  Run py on the provided file, py acts the same
 
 Options and arguments:
 -h     : print this message and exit (also ---help)
--q     : supresses non-error output from mypy, isort, black and python
--      : program read from stdin (default; interactive mode if a tty)
+-q     : supresses non-error non-result output from mypy, isort, black, python
+         and py itself
 [...]  : other options passed to py are passed to python when a file is present
 file   : program read from script file
+-      : program read from stdin (default; interactive mode if a tty)
 arg    : arguments passed to program in sys.argv[1:]
 
 Environment variable:
@@ -68,6 +69,7 @@ if [[ $PY == "" ]]; then
   PY="python3"
 fi
 
+
 if [[ $quiet -eq 1 ]]
   then
     # quiet flag is the same for python3, isort, and black
@@ -84,6 +86,16 @@ if [[ $start_console -eq 1 ]]; then
   fi
   # TODO fix exit code?
   $tty_cmd
+  exit 0
+fi
+
+if [[ $c_arg -eq 1 ]]; then
+  if [[ $quiet -eq 1 ]]; then
+      $PY -c "$3"
+    else
+      printf "+ $PY -c \"$2\"\n"
+      $PY -c "$2"
+  fi
   exit 0
 fi
 
@@ -122,7 +134,7 @@ set_x_if_allowed() {
 
 if [[ $# -eq 0 ]] || \
 [[ $# -eq 1 && $1 == -q ]] || \
-[[ $# -eq 1 && $1 == -h || $# -eq 1 && $1 == --help ]]
+[[ $# -eq 1 && $1 == -h || $# -eq 1 && $1 == --help ]] # TODO remove? help exits
   then
     run_mypy .
     set_x_if_allowed
