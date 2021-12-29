@@ -26,17 +26,22 @@ done
 
 if [[ $pyhelp -eq 1 ]]; then
 cat << _EOT_
-py [-h] [python arguments] [file.py] [file.py arguments]
+Usage: py [option] ... [file] [arg] ...
+py = mypy + isort + black + python, in one command
 
-py = mypy + isort + black + python
+Without file argument:   Run py recursively in the current directory
+With one file argument:  Run py on the provided file, py acts the same
+                         as the python3 command for files
 
-Without argument file:   Run py recursively in the current directory.
-With argument file:      Run py on the provided file.
+Options and arguments:
+-h     : print this message and exit (also ---help)
+-q     : supresses non-error output from mypy, isort, black and python
+[...]  : other options passed to py are passed to python when a file is present
+file   : program read from script file
+arg    : arguments passed to program in sys.argv[1:]
 
-\`py\` acts the same as \`python\` otherwise.
-
--h, ---help   show this message
--q            supresses non-error output
+Environment variable:
+PY     : Location of Python3 command, if not set defaults to \`python3\`
 _EOT_
 exit 1
 fi
@@ -55,6 +60,10 @@ if [[ $quiet -eq 1 ]]
     quiet_flag=""
 fi
 
+
+# TODO implement all python3's functionality:
+# [-c cmd | -m mod | file | -]
+# -      : program read from stdin (default; interactive mode if a tty)
 # just ignore all arguments except -q if no file.py given ¯\_(ツ)_/¯
 
 run_mypy () {
