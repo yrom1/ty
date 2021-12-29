@@ -11,18 +11,22 @@ for i in "${!args[@]}"
 do
   if [[ ${args[$i]} == -h || ${args[$i]} == --help ]]; then
     cat << _EOT_
-Usage: py [option] ... [file | -] [arg] ...
+Usage: py [option] ... [-c cmd | -m mod | file | -] [arg] ...
 py = mypy + isort + black + python, in one command
 
 Without file argument:   Run py recursively in the current directory
 With one file argument:  Run py on the provided file, py acts the same
                          as the python3 command for files
 
+You can't pass arguments to mypy, isort or black through py, I use a
+pyproject.toml: https://snarky.ca/what-the-heck-is-pyproject-toml/
+
 Options and arguments:
 -h     : print this message and exit (also ---help)
--q     : supresses non-error non-result output from mypy, isort, black, python
-         and py itself
-[...]  : other options passed to py are passed to python when a file is present
+-q     : supresses non-error output from mypy, isort, black, and py itself
+[...]  : other options passed to py are passed to python as expected
+-c cmd : program passed in as string (terminates option list)
+-m mod : run library module as a script (terminates option list)
 file   : program read from script file
 -      : program read from stdin (default; interactive mode if a tty)
 arg    : arguments passed to program in sys.argv[1:]
@@ -99,9 +103,6 @@ if [[ $c_arg -eq 1 || $m_arg -eq 1 ]]; then
   exit
 fi
 
-# TODO implement all python3's functionality:
-# [-c cmd | -m mod | file | -]
-# just ignore all arguments except -q if no file.py given ¯\_(ツ)_/¯
 
 run_mypy () {
   if [[ $quiet -eq 0 ]]; then
