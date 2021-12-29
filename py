@@ -17,8 +17,8 @@ With one file argument:  Run py on the provided file, py acts the same
 
 Options and arguments:
 -h     : print this message and exit (also ---help)
--      : program read from stdin (default; interactive mode if a tty)
 -q     : supresses non-error output from mypy, isort, black and python
+-      : program read from stdin (default; interactive mode if a tty)
 [...]  : other options passed to py are passed to python when a file is present
 file   : program read from script file
 arg    : arguments passed to program in sys.argv[1:]
