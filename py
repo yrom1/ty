@@ -100,6 +100,16 @@ if [[ $c_arg -eq 1 ]]; then
   exit 0
 fi
 
+if [[ $m_arg -eq 1 ]]; then
+  if [[ $quiet -eq 1 ]]; then
+      $PY -m $3 $4
+    else
+      printf "+ $PY -m $2 $3\n"
+      $PY -m $2 $3
+  fi
+  exit 0
+fi
+
 # TODO implement all python3's functionality:
 # [-c cmd | -m mod | file | -]
 # just ignore all arguments except -q if no file.py given ¯\_(ツ)_/¯
