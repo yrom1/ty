@@ -1,31 +1,12 @@
 #!/usr/bin/env bash
 set -eou pipefail
 
-pyhelp=0
 quiet=0
 args=("$@")
 for i in "${!args[@]}"
 do
   if [[ ${args[$i]} == -h || ${args[$i]} == --help ]]; then
-    pyhelp=1
-    break
-  fi
-
-  if [[ ${args[$i]} == -q ]]
-  then
-    quiet=1
-  fi
-
-  if [[ ${args[$i]} == *.py ]]; then
-    pre_file_args=${args[@]:0:$i}
-    file=${args[$i]}
-    post_file_args=${args[@]:$i + 1:${#args[@]}}
-    break
-  fi
-done
-
-if [[ $pyhelp -eq 1 ]]; then
-cat << _EOT_
+    cat << _EOT_
 Usage: py [option] ... [file] [arg] ...
 py = mypy + isort + black + python, in one command
 
@@ -43,8 +24,23 @@ arg    : arguments passed to program in sys.argv[1:]
 Environment variable:
 PY     : Location of Python3 command, if not set defaults to \`python3\`
 _EOT_
-exit 1
-fi
+    exit 1
+    break
+  fi
+
+  if [[ ${args[$i]} == -q ]]
+  then
+    quiet=1
+  fi
+
+  if [[ ${args[$i]} == *.py ]]; then
+    pre_file_args=${args[@]:0:$i}
+    file=${args[$i]}
+    post_file_args=${args[@]:$i + 1:${#args[@]}}
+    break
+  fi
+done
+
 
 if [[ $PY == "" ]]; then
   echo PY env variable not set, default-ing to python3
@@ -59,7 +55,6 @@ if [[ $quiet -eq 1 ]]
   else
     quiet_flag=""
 fi
-
 
 # TODO implement all python3's functionality:
 # [-c cmd | -m mod | file | -]
