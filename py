@@ -60,17 +60,21 @@ fi
 # just ignore all arguments except -q if no file.py given ¯\_(ツ)_/¯
 
 run_mypy () {
+  if [[ $quiet -eq 0 ]]; then
+      printf "+ $PY -m mypy --pretty $1\n"
+  fi
+
   set +e
   # not using local so exit code reflects mypy
   mypy_output=$($PY -m mypy --pretty $1)
   mypy_exit_code=$?
+  set -e
 
   if [[ $mypy_exit_code -eq 0 && $quiet -eq 0 ]]
   then
     echo "$mypy_output"
   fi
 
-  set -e
   if [[ $mypy_exit_code -eq 1 ]]
   then
     echo "$mypy_output"
@@ -78,17 +82,23 @@ run_mypy () {
   fi
 }
 
+set_x_if_allowed() {
+  if [[ $quiet -eq 0 ]]; then
+      set -x
+  fi
+}
+
 if [[ $# -eq 0 ]] || \
 [[ $# -eq 1 && $1 == -q ]] || \
 [[ $# -eq 1 && $1 == -h || $# -eq 1 && $1 == --help ]]
   then
-    #set -x
     run_mypy .
+    set_x_if_allowed
     $PY -m isort $quiet_flag .
     $PY -m black $quiet_flag .
   else
-    #set -x
     run_mypy $file
+    set_x_if_allowed
     $PY -m isort $quiet_flag $file
     $PY -m black $quiet_flag $file
     # don't pass the quiet flag to python, I'm exploiting
