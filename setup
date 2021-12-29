@@ -6,9 +6,10 @@ sudo cp py /usr/"$USER"
 sudo chmod +x /usr/"$USER"/py
 
 set +x
-echo installing requirements 🐍
 echo + cat requirements.txt
 echo "$(cat requirements.txt)"
+echo 🐍 installing requirements
+printf "+ pip3 -q -q -q install -r requirements.txt 2>&1\n"
 please_be_quiet=$(pip3 -q -q -q install -r requirements.txt 2>&1)
 set -x
 
@@ -30,4 +31,4 @@ if [[ $grep_return == 1 ]]; then
 fi
 
 set +xH
-printf "success! restart terminal to use py 🐍\n"
+printf "🐍 success! restart terminal to use py\n"
