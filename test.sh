@@ -29,10 +29,8 @@ cat test-tty-stdin.py | ./py test-tty-stdin.py
 rm -rf .venv-test/
 ./py -m venv .venv-test
 rm -rf .venv-test/
-./py -m -q venv .venv-test
-rm -rf .venv-test/
 ./py -q -m venv .venv-test
 rm -rf .venv-test/
 
-# TODO
-# ./py -X importtime -c 'import asyncio'
+./py -X importtime -c 'import asyncio'
+./py -q -X importtime -c 'import asyncio'
