@@ -20,3 +20,6 @@ grep_return=$?
 if [[ $grep_return == 1 ]]; then
     echo "export PY=\"python3\"" >> ~/.bashrc
 fi
+
+set +xH
+printf "success! restart terminal to use py 🐍\n"
