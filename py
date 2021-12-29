@@ -88,8 +88,6 @@ if [[ $start_console -eq 1 ]]; then
   exit
 fi
 
-# BUG ./py -X importtime -c 'import asyncio' doesn't work
-# because args are hardcoded
 
 if [[ $c_arg -eq 1 || $m_arg -eq 1 ]]; then
   if [[ $quiet -eq 0 ]]; then
