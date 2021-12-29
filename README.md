@@ -40,7 +40,7 @@ For Ubuntu 20.04 LTS:
 
 ```bash
 chmod +x setup
-source ./setup
+./setup
 ```
 
 That's it!
