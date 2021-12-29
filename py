@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 set -eou pipefail
 
+start_console=0
 quiet=0
 args=("$@")
 for i in "${!args[@]}"
 do
   if [[ ${args[$i]} == -h || ${args[$i]} == --help ]]; then
     cat << _EOT_
-Usage: py [option] ... [file] [arg] ...
+Usage: py [option] ... [file | -] [arg] ...
 py = mypy + isort + black + python, in one command
 
 Without file argument:   Run py recursively in the current directory
@@ -16,6 +17,7 @@ With one file argument:  Run py on the provided file, py acts the same
 
 Options and arguments:
 -h     : print this message and exit (also ---help)
+-      : program read from stdin (default; interactive mode if a tty)
 -q     : supresses non-error output from mypy, isort, black and python
 [...]  : other options passed to py are passed to python when a file is present
 file   : program read from script file
@@ -24,7 +26,12 @@ arg    : arguments passed to program in sys.argv[1:]
 Environment variable:
 PY     : Location of Python3 command, if not set defaults to \`python3\`
 _EOT_
-    exit 1
+    exit 0
+  fi
+
+  if [[ ${args[$i]} == - ]]
+  then
+    start_console=1
   fi
 
   if [[ ${args[$i]} == -q ]]
@@ -55,9 +62,18 @@ if [[ $quiet -eq 1 ]]
     quiet_flag=""
 fi
 
+if [[ $start_console -eq 1 ]]; then
+  tty_cmd="$PY $quiet_flag -"
+  if [[ $quiet -eq 0 ]]; then
+    echo + $tty_cmd
+  fi
+  # TODO fix exit code?
+  $tty_cmd
+  exit 0
+fi
+
 # TODO implement all python3's functionality:
 # [-c cmd | -m mod | file | -]
-# -      : program read from stdin (default; interactive mode if a tty)
 # just ignore all arguments except -q if no file.py given ¯\_(ツ)_/¯
 
 run_mypy () {
