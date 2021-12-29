@@ -25,7 +25,6 @@ Environment variable:
 PY     : Location of Python3 command, if not set defaults to \`python3\`
 _EOT_
     exit 1
-    break
   fi
 
   if [[ ${args[$i]} == -q ]]
