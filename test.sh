@@ -1,36 +1,36 @@
 #!/usr/bin/env bash
 set -oux pipefail
-./py
+./ry
 
-./py -h
-./py --help
+./ry -h
+./ry --help
 
-./py test-good.py
-./py test-bad.py
-./py test-good.py 1 2 3
-./py test-bad.py 1 2 3
-./py -O test-good.py 1 2 3
-./py -O test-bad.py 1 2 3
+./ry test-good.py
+./ry test-bad.py
+./ry test-good.py 1 2 3
+./ry test-bad.py 1 2 3
+./ry -O test-good.py 1 2 3
+./ry -O test-bad.py 1 2 3
 
-./py -q
-./py -q test-good.py 1 2 3
-./py -q test-bad.py 1 2 3
-./py -q -O test-good.py 1 2 3
-./py -q -O test-bad.py 1 2 3
+./ry -q
+./ry -q test-good.py 1 2 3
+./ry -q test-bad.py 1 2 3
+./ry -q -O test-good.py 1 2 3
+./ry -q -O test-bad.py 1 2 3
 
-cat test-tty-stdin.py | ./py test-tty-stdin.py
-./py -
-./py -q -
+cat test-tty-stdin.py | ./ry test-tty-stdin.py
+./ry -
+./ry -q -
 
-./py -c "print(1)"
-./py -c "print(1);   print(2)"
-./py -q -c "print(1);   print(2)"
+./ry -c "print(1)"
+./ry -c "print(1);   print(2)"
+./ry -q -c "print(1);   print(2)"
 
 rm -rf .venv-test/
-./py -m venv .venv-test
+./ry -m venv .venv-test
 rm -rf .venv-test/
-./py -q -m venv .venv-test
+./ry -q -m venv .venv-test
 rm -rf .venv-test/
 
-./py -X importtime -c 'import asyncio'
-./py -q -X importtime -c 'import asyncio'
+./ry -X importtime -c 'import asyncio'
+./ry -q -X importtime -c 'import asyncio'
