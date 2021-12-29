@@ -79,15 +79,13 @@ if [[ $quiet -eq 1 ]]
     quiet_flag=""
 fi
 
-# TODO fix exit codes, or should py exit successfully?
-
 if [[ $start_console -eq 1 ]]; then
   tty_cmd="$PY $quiet_flag -"
   if [[ $quiet -eq 0 ]]; then
     echo + $tty_cmd
   fi
   $tty_cmd
-  exit 0
+  exit
 fi
 
 if [[ $c_arg -eq 1 ]]; then
@@ -97,7 +95,7 @@ if [[ $c_arg -eq 1 ]]; then
       printf "+ $PY -c \"$2\"\n"
       $PY -c "$2"
   fi
-  exit 0
+  exit
 fi
 
 if [[ $m_arg -eq 1 ]]; then
@@ -107,7 +105,7 @@ if [[ $m_arg -eq 1 ]]; then
       printf "+ $PY -m $2 $3\n"
       $PY -m $2 $3
   fi
-  exit 0
+  exit
 fi
 
 # TODO implement all python3's functionality:
