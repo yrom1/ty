@@ -64,7 +64,6 @@ run_mypy () {
   # not using local so exit code reflects mypy
   mypy_output=$($PY -m mypy $1)
   mypy_exit_code=$?
-  echo mypy_exit_code $mypy_exit_code
 
   if [[ $mypy_exit_code -eq 0 && $quiet -eq 0 ]]
   then
