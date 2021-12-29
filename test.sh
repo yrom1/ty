@@ -5,10 +5,15 @@ set -oux pipefail
 ./py -h
 ./py --help
 
-./py test.py
-./py test.py 1 2 3
-./py -O test.py 1 2 3
+./py test-good.py
+./py test-bad.py
+./py test-good.py 1 2 3
+./py test-bad.py 1 2 3
+./py -O test-good.py 1 2 3
+./py -O test-bad.py 1 2 3
 
 ./py -q
-./py -q test.py 1 2 3
-./py -q -O test.py 1 2 3
+./py -q test-good.py 1 2 3
+./py -q test-bad.py 1 2 3
+./py -q -O test-good.py 1 2 3
+./py -q -O test-bad.py 1 2 3
