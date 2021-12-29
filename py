@@ -90,9 +90,11 @@ fi
 
 
 if [[ $c_arg -eq 1 || $m_arg -eq 1 ]]; then
-  if [[ $quiet -eq 0 ]]; then
-    echo + $PY "$@"
-  fi
+  # if [[ $quiet -eq 0 ]]; then
+  #   # BUG echo doesn't preserve quotes, superficial only
+  #   echo + $PY "$@"
+  # fi
+  # set -x
   $PY "$@"
   exit
 fi
