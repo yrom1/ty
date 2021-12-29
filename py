@@ -92,11 +92,12 @@ fi
 # because args are hardcoded
 
 if [[ $c_arg -eq 1 ]]; then
+  c_args=${args[@]:0:${#args[@]}}
   if [[ $quiet -eq 1 ]]; then
-      $PY -c "$3"
+      $PY $c_args
     else
-      printf "+ $PY -c \"$2\"\n"
-      $PY -c "$2"
+      printf "+ $PY $c_args\n"
+      $PY $c_args
   fi
   exit
 fi

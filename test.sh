@@ -23,8 +23,6 @@ cat test-tty-stdin.py | ./py test-tty-stdin.py
 ./py -q -
 
 ./py -c "print(1)"
-./py -c -q "print(1)"
-./py -c -q "print(1)"
 ./py -c "print(1);   print(2)"
 ./py -q -c "print(1);   print(2)"
 
