@@ -7,9 +7,18 @@ pip3 install -r requirements.txt
 sudo mkdir -p /usr/"$USER"
 sudo cp py /usr/"$USER"
 sudo chmod +x /usr/"$USER"/py
-grep -q 'export PATH=\"/usr/\$USER:\$PATH\"' ~/.bashrc # 0 is found, 1 is not found
+
+# 0 is found, 1 is not found
+grep -q 'export PATH=\"/usr/\$USER:\$PATH\"' ~/.bashrc
 grep_return=$?
 if [[ $grep_return == 1 ]]; then
     echo "export PATH=\"/usr/\$USER:\$PATH\"" >> ~/.bashrc
 fi
+
+grep -q 'export PY=\"python3\"' ~/.bashrc
+grep_return=$?
+if [[ $grep_return == 1 ]]; then
+    echo "export PY=\"python3\"" >> ~/.bashrc
+fi
+
 source ~/.bashrc

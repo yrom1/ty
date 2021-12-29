@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # USAGE: ./py -i test.py hi
 set -eou pipefail
+python3=$PY
 
 args=("$@")
 for i in "${!args[@]}"
