@@ -61,20 +61,23 @@ fi
 
 run_mypy () {
   set +e
-  local mypy_output=$($PY -m mypy $1)
-  local mypy_exit_code=$?
+  # not using local so exit code reflects mypy
+  mypy_output=$($PY -m mypy $1)
+  mypy_exit_code=$?
+  echo mypy_exit_code $mypy_exit_code
 
   if [[ $mypy_exit_code -eq 0 && $quiet -eq 0 ]]
   then
     echo $mypy_output
   fi
 
+  set -e
   if [[ $mypy_exit_code -eq 1 ]]
   then
     echo $mypy_output
+    echo exiting
     exit 1
   fi
-  set -e
 }
 
 if [[ $# -eq 0 ]] || \
