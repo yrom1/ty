@@ -55,7 +55,6 @@ if [[ $quiet -eq 1 ]]
     quiet_flag=""
 fi
 
-# TODO manual set -x
 # TODO mypy color output --color-output
 # just ignore all arguments except -q if no file.py given ¯\_(ツ)_/¯
 
