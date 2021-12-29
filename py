@@ -2,7 +2,10 @@
 set -eou pipefail
 
 start_console=0
+m_arg=0
+c_arg=0
 quiet=0
+file_flag=0
 args=("$@")
 for i in "${!args[@]}"
 do
@@ -29,17 +32,24 @@ _EOT_
     exit 0
   fi
 
-  if [[ ${args[$i]} == - ]]
-  then
+  if [[ ${args[$i]} == - ]]; then
     start_console=1
   fi
 
-  if [[ ${args[$i]} == -q ]]
-  then
+  if [[ ${args[$i]} == -m ]]; then
+    m_arg=1
+  fi
+
+  if [[ ${args[$i]} == -c ]]; then
+    c_arg=1
+  fi
+
+  if [[ ${args[$i]} == -q ]]; then
     quiet=1
   fi
 
   if [[ ${args[$i]} == *.py ]]; then
+    file_flag=1
     pre_file_args=${args[@]:0:$i}
     file=${args[$i]}
     post_file_args=${args[@]:$i + 1:${#args[@]}}
@@ -47,6 +57,11 @@ _EOT_
   fi
 done
 
+arg_sum=$(expr $start_console + $m_arg + $c_arg + $file_flag )
+if [[ $arg_sum -gt 1 ]]; then
+  echo -c, -m, *.py, - args mutually exclusive
+  exit 1
+fi
 
 if [[ $PY == "" ]]; then
   echo PY env variable not set, default-ing to python3
