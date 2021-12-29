@@ -35,3 +35,6 @@ rm -rf .venv-test/
 rm -rf .venv-test/
 ./py -q -m venv .venv-test
 rm -rf .venv-test/
+
+# TODO
+# ./py -X importtime -c 'import asyncio'
