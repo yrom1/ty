@@ -13,7 +13,6 @@ printf "+ pip3 -q -q -q install -r requirements.txt 2>&1\n"
 please_be_quiet=$(pip3 -q -q -q install -r requirements.txt 2>&1)
 set -x
 
-# 0 is found, 1 is not found
 set +e
 grep -q 'export PATH=\"/usr/\$USER:\$PATH\"' ~/.bashrc
 grep_return=$?
