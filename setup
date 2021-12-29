@@ -2,11 +2,11 @@
 #set -exou pipefail
 set -x
 
-pip3 install -r requirements.txt
-
 sudo mkdir -p /usr/"$USER"
 sudo cp py /usr/"$USER"
 sudo chmod +x /usr/"$USER"/py
+
+pip3 install -r requirements.txt
 
 # 0 is found, 1 is not found
 grep -q 'export PATH=\"/usr/\$USER:\$PATH\"' ~/.bashrc
