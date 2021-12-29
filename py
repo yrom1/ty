@@ -91,24 +91,11 @@ fi
 # BUG ./py -X importtime -c 'import asyncio' doesn't work
 # because args are hardcoded
 
-if [[ $c_arg -eq 1 ]]; then
-  c_args=${args[@]:0:${#args[@]}}
-  if [[ $quiet -eq 1 ]]; then
-      $PY $c_args
-    else
-      printf "+ $PY $c_args\n"
-      $PY $c_args
+if [[ $c_arg -eq 1 || $m_arg -eq 1 ]]; then
+  if [[ $quiet -eq 0 ]]; then
+    echo + $PY "$@"
   fi
-  exit
-fi
-
-if [[ $m_arg -eq 1 ]]; then
-  if [[ $quiet -eq 1 ]]; then
-      $PY -m $3 $4
-    else
-      printf "+ $PY -m $2 $3\n"
-      $PY -m $2 $3
-  fi
+  $PY "$@"
   exit
 fi
 
