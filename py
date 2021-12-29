@@ -58,7 +58,7 @@ _EOT_
   fi
 done
 
-arg_sum=$(expr $start_console + $m_arg + $c_arg + $file_flag )
+arg_sum=$(( $start_console + $m_arg + $c_arg + $file_flag))
 if [[ $arg_sum -gt 1 ]]; then
   echo -c, -m, *.py, - args mutually exclusive
   exit 1
