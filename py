@@ -79,12 +79,13 @@ if [[ $quiet -eq 1 ]]
     quiet_flag=""
 fi
 
+# TODO fix exit codes, or should py exit successfully?
+
 if [[ $start_console -eq 1 ]]; then
   tty_cmd="$PY $quiet_flag -"
   if [[ $quiet -eq 0 ]]; then
     echo + $tty_cmd
   fi
-  # TODO fix exit code?
   $tty_cmd
   exit 0
 fi
@@ -133,8 +134,7 @@ set_x_if_allowed() {
 }
 
 if [[ $# -eq 0 ]] || \
-[[ $# -eq 1 && $1 == -q ]] || \
-[[ $# -eq 1 && $1 == -h || $# -eq 1 && $1 == --help ]] # TODO remove? help exits
+[[ $# -eq 1 && $1 == -q ]]
   then
     run_mypy .
     set_x_if_allowed
