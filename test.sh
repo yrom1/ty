@@ -38,3 +38,13 @@ rm -rf .venv-test/
 ./ry -V
 ./ry -V -V
 ./ry -V -V -V # does the same as -V -V
+
+# these tests can fail if you don't actually have the 3.X verion installed which
+# is correct, ry should fail by returning py's message which looks like this:
+# $ py -3.8
+# No executable found for Python 3.8
+./ry -3 -V
+./ry -3.8 -V
+./ry -3.9 -V
+./ry -3.10 -V
+./ry -3.9 -O -i test-good.py 1 2 3

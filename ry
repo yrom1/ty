@@ -1,18 +1,21 @@
 #!/usr/bin/env bash
 set -eou pipefail
 
+py_version=""
+py_version_arg=0
 V_arg=0
 dash_arg=0
 m_arg=0
 c_arg=0
 q_arg=0
 file_arg=0
+
 args=("$@")
 for i in "${!args[@]}"
 do
   if [[ ${args[$i]} == -h || ${args[$i]} == --help ]]; then
     cat << _EOT_
-Usage: ry [option] ... [-c cmd | -m mod | file | -] [arg] ...
+Usage: ry [-[X] | [X.Y]] [option] ... [-c cmd | -m mod | file | -] [arg] ...
 ry = mypy + isort + black + python, in one command
 
 Without file argument:   Run ry recursively in the current directory
@@ -22,6 +25,8 @@ You can't pass arguments to mypy, isort or black through ry, I use a
 pyproject.toml: https://snarky.ca/what-the-heck-is-pyproject-toml/
 
 Options and arguments:
+-[X]   Launch the latest Python X version (e.g. -3 for the latest Python 3).
+-[X.Y] Launch the specified Python version (e.g. -3.6 for Python 3.6).
 -h     : print this message and exit (also ---help)
 -q     : supresses non-error output from mypy, isort, black, and ry itself
 [...]  : other options passed to ry are passed to python as expected
@@ -30,15 +35,17 @@ Options and arguments:
 file   : program read from script file
 -      : program read from stdin (default; interactive mode if a tty)
 arg    : arguments passed to program in sys.argv[1:]
-
-Environment variable:
-RY     : Location of Python3 command, if not set defaults to \`py\`
 _EOT_
     exit 0
   fi
 
   if [[ ${args[$i]} == - ]]; then
     dash_arg=1
+  fi
+
+  if [[ ${args[$i]} =~ -[3-4]\.?[0-9]{0,2} ]]; then
+    py_version_arg=1
+    py_version=${args[$i]}
   fi
 
   if [[ ${args[$i]} == -m ]]; then
@@ -73,22 +80,16 @@ if [[ $arg_sum -gt 1 ]]; then
   exit 1
 fi
 
-if [[ $RY == "" ]]; then
-  echo RY env variable not set, default-ing to py
-  RY="py"
+if ! [ -x "$(command -v py)" ]; then
+  echo 'Error: ry depends on py but it is unavailable (see, https://github.com/brettcannon/python-launcher)' >&2
+  echo ry defaulting to system python3 install
+  RY="python3"
 fi
 
-if [[ -z ${RY+ryryryry} ]]; then # ryryryry is a random string
-  # RY env variable is unset
-  echo 'Error: RY environment variable not set' >&2
-  echo ry attempting to use py https://github.com/brettcannon/python-launcher
+if [[ $py_version_arg -eq 1 ]]; then
+  RY="py $py_version"
+else
   RY="py"
-  if ! [ -x "$(command -v py)" ]; then
-    # py command doesn't exist
-    echo 'Error: ry depends on py but it is not installed' >&2
-    echo ry defaulting to system python3 install
-    RY="python3"
-  fi
 fi
 
 if [[ $V_arg -eq 1 ]]; then
@@ -159,7 +160,8 @@ set_x_if_allowed() {
 }
 
 if [[ $# -eq 0 ]] || \
-[[ $# -eq 1 && $1 == -q ]]
+[[ $# -eq 1 && ( $q_arg -eq 1 || $py_version_arg -eq 1 ) ]] || \
+[[ $# -eq 2 && ( $q_arg -eq 1 && $py_version_arg -eq 1 ) ]]
   then
     run_mypy .
     set_x_if_allowed
