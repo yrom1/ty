@@ -82,7 +82,7 @@ fi
 if [[ -z ${RY+ryryryry} ]]; then # ryryryry is a random string
   # RY env variable is unset
   echo 'Error: RY environment variable not set' >&2
-  echo ry attempting to use py https://github.com/brettcannon/desugar
+  echo ry attempting to use py https://github.com/brettcannon/python-launcher
   RY="py"
   if ! [ -x "$(command -v py)" ]; then
     # py command doesn't exist
