@@ -1,18 +1,28 @@
 #!/usr/bin/env bash
-set -exou pipefail
+set -eou pipefail
 
+echo "🐍 setting up folder for ry at /usr/"$USER""
+set -x
 sudo mkdir -p /usr/"$USER"
 sudo cp ry /usr/"$USER"
 sudo chmod +x /usr/"$USER"/ry
 
 set +x
+echo 🐍 installing requirements
 echo + cat requirements.txt
 echo "$(cat requirements.txt)"
-echo 🐍 installing requirements
-printf "+ py -m pip -q -q -q install -r requirements.txt 2>&1\n"
-please_be_quiet=$(py -m pip -q -q -q install -r requirements.txt 2>&1)
-set -x
+printf "+ py -m pip -q -q -q install -r requirements.txt\n"
+set +e
+pip_text="$(py -m pip -q -q -q install -r requirements.txt)"
+pip_status_code=$?
+set -e
+if [[ $pip_status_code -eq 1 ]]; then
+  echo 'Error: cannot install ry requirements' >&2
+  exit 1
+fi
 
+echo "🐍 adding ry folder /usr/"$USER" to PATH in ~/.bashrc"
+set -x
 set +e
 grep -q 'export PATH=\"/usr/\$USER:\$PATH\"' ~/.bashrc
 grep_return=$?
@@ -21,6 +31,9 @@ if [[ $grep_return == 1 ]]; then
     echo "export PATH=\"/usr/\$USER:\$PATH\"" >> ~/.bashrc
 fi
 
+set +x
+echo "🐍 adding RY enviromental variable in ~/.bashrc"
+set -x
 set +e
 grep -q 'export RY=\"py\"' ~/.bashrc
 grep_return=$?
