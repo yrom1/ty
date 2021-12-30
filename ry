@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -eou pipefail
 
+# TODO unify arg names
+V_arg=0
 start_console=0
 m_arg=0
 c_arg=0
@@ -52,6 +54,11 @@ _EOT_
     quiet=1
   fi
 
+  if [[ ${args[$i]} == -V ]]; then
+    # python3 -V and python3 -V -V do different things
+    V_arg=$(( V_arg + 1 ))
+  fi
+
   if [[ ${args[$i]} == *.py ]]; then
     file_flag=1
     pre_file_args=${args[@]:0:$i}
@@ -72,6 +79,13 @@ if [[ $RY == "" ]]; then
   RY="py"
 fi
 
+if [[ $V_arg -eq 1 ]]; then
+    $RY -V
+    exit 0
+  elif [[ $V_arg -ge 2 ]]; then
+    $RY -V -V
+    exit 0
+fi
 
 if [[ $quiet -eq 1 ]]
   then
