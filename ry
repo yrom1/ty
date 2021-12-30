@@ -25,8 +25,8 @@ You can't pass arguments to mypy, isort or black through ry, I use a
 pyproject.toml: https://snarky.ca/what-the-heck-is-pyproject-toml/
 
 Options and arguments:
--[X]   Launch the latest Python X version (e.g. -3 for the latest Python 3).
--[X.Y] Launch the specified Python version (e.g. -3.6 for Python 3.6).
+-[X]   : launch the latest Python X version (e.g. -3 for the latest Python 3)
+-[X.Y] : launch the specified Python version (e.g. -3.6 for Python 3.6)
 -h     : print this message and exit (also ---help)
 -q     : supresses non-error output from mypy, isort, black, and ry itself
 [...]  : other options passed to ry are passed to python as expected
