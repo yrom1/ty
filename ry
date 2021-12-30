@@ -5,7 +5,7 @@ V_arg=0
 dash_arg=0
 m_arg=0
 c_arg=0
-quiet=0
+q_arg=0
 file_arg=0
 args=("$@")
 for i in "${!args[@]}"
@@ -50,7 +50,7 @@ _EOT_
   fi
 
   if [[ ${args[$i]} == -q ]]; then
-    quiet=1
+    q_arg=1
   fi
 
   if [[ ${args[$i]} == -V ]]; then
@@ -99,7 +99,7 @@ if [[ $V_arg -eq 1 ]]; then
     exit 0
 fi
 
-if [[ $quiet -eq 1 ]]
+if [[ $q_arg -eq 1 ]]
   then
     # quiet flag is the same for python3, isort, and black
     # mypy doesn't have a quiet flag :( see workaround below
@@ -110,7 +110,7 @@ fi
 
 if [[ $dash_arg -eq 1 ]]; then
   tty_cmd="$RY $quiet_flag -"
-  if [[ $quiet -eq 0 ]]; then
+  if [[ $q_arg -eq 0 ]]; then
     echo + $tty_cmd
   fi
   $tty_cmd
@@ -119,7 +119,7 @@ fi
 
 
 if [[ $c_arg -eq 1 || $m_arg -eq 1 ]]; then
-  # if [[ $quiet -eq 0 ]]; then
+  # if [[ $q_arg -eq 0 ]]; then
   #   # BUG echo doesn't preserve quotes, superficial only
   #   echo + $RY "$@"
   # fi
@@ -130,7 +130,7 @@ fi
 
 
 run_mypy () {
-  if [[ $quiet -eq 0 ]]; then
+  if [[ $q_arg -eq 0 ]]; then
       printf "+ $RY -m mypy $1\n"
   fi
 
@@ -140,7 +140,7 @@ run_mypy () {
   mypy_exit_code=$?
   set -e
 
-  if [[ $mypy_exit_code -eq 0 && $quiet -eq 0 ]]
+  if [[ $mypy_exit_code -eq 0 && $q_arg -eq 0 ]]
   then
     printf "$mypy_output\n"
   fi
@@ -153,7 +153,7 @@ run_mypy () {
 }
 
 set_x_if_allowed() {
-  if [[ $quiet -eq 0 ]]; then
+  if [[ $q_arg -eq 0 ]]; then
       set -x
   fi
 }
