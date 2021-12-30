@@ -177,7 +177,7 @@ if [[ $# -eq 0 ]] || \
     #    the fact our quiet flag is the same as python's -q
     #    so it's in pre_file_args already
     # 2) don't pass RY as normal, the version is already in
-    #    pre_fileargs so you'll double pass that argument
+    #    pre_file_args so you'll double pass that argument
     #    that's why we just use py here
     py $pre_file_args $file $post_file_args
 fi
