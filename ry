@@ -79,6 +79,19 @@ if [[ $RY == "" ]]; then
   RY="py"
 fi
 
+if [[ -z ${RY+ryryryry} ]]; then # ryryryry is a random string
+  # RY env variable is unset
+  echo 'Error: RY environment variable not set' >&2
+  echo ry attempting to use py https://github.com/brettcannon/desugar
+  RY="py"
+  if ! [ -x "$(command -v py)" ]; then
+    # py command doesn't exist
+    echo 'Error: ry depends on py but it is not installed' >&2
+    echo ry defaulting to system python3 install
+    RY="python3"
+  fi
+fi
+
 if [[ $V_arg -eq 1 ]]; then
     $RY -V
     exit 0
