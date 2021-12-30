@@ -172,8 +172,12 @@ if [[ $# -eq 0 ]] || \
     set_x_if_allowed
     $RY -m isort $quiet_flag $file
     $RY -m black $quiet_flag $file
-    # don't pass the quiet flag to python, I'm exploiting
-    # the fact our quiet flag is the same as python's "-q"
-    # so it's in pre_file_args already
-    $RY $pre_file_args $file $post_file_args
+    # Two things:
+    # 1) don't pass the quiet flag to python, I'm exploiting
+    #    the fact our quiet flag is the same as python's -q
+    #    so it's in pre_file_args already
+    # 2) don't pass RY as normal, the version is already in
+    #    pre_fileargs so you'll double pass that argument
+    #    that's why we just use py here
+    py $pre_file_args $file $post_file_args
 fi
