@@ -9,8 +9,8 @@ set +x
 echo + cat requirements.txt
 echo "$(cat requirements.txt)"
 echo 🐍 installing requirements
-printf "+ pip3 -q -q -q install -r requirements.txt 2>&1\n"
-please_be_quiet=$(pip3 -q -q -q install -r requirements.txt 2>&1)
+printf "+ py -m pip -q -q -q install -r requirements.txt 2>&1\n"
+please_be_quiet=$(py -m pip -q -q -q install -r requirements.txt 2>&1)
 set -x
 
 set +e
