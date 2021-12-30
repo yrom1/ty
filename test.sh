@@ -34,3 +34,7 @@ rm -rf .venv-test/
 
 ./ry -X importtime -c 'import asyncio'
 ./ry -q -X importtime -c 'import asyncio'
+
+./ry -V
+./ry -V -V
+./ry -V -V -V # does the same as -V -V
