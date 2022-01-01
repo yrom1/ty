@@ -16,7 +16,7 @@ do
   if [[ ${args[$i]} == -h || ${args[$i]} == --help ]]; then
     cat << _EOT_
 Usage: ry [-X | -X.Y] [option] ... [-c cmd | -m mod | file | -] [arg] ...
-ry = mypy + isort + black + python, in one command
+ry = mypy + isort + black + py, in one command
 
 Without file argument:   Run ry recursively in the current directory
 With one file argument:  Run ry on the provided file
