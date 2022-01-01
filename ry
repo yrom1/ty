@@ -82,8 +82,7 @@ fi
 
 if ! [ -x "$(command -v py)" ]; then
   echo 'Error: ry depends on py but it is unavailable (see, https://github.com/brettcannon/python-launcher)' >&2
-  echo ry defaulting to system python3 install
-  RY="python3"
+  exit 1
 fi
 
 if [[ $py_version_arg -eq 1 ]]; then
