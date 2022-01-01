@@ -76,7 +76,7 @@ done
 
 arg_sum=$(( $dash_arg + $m_arg + $c_arg + $file_arg))
 if [[ $arg_sum -gt 1 ]]; then
-  echo -c, -m, *.py, - args mutually exclusive
+  echo 'Error: -c, -m, *.py, - args mutually exclusive' >&2
   exit 1
 fi
 
