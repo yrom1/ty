@@ -1,0 +1,3 @@
+$ ry -m mypy main.py
+-c, -m, *.py, - args mutually exclusive
+this should work, python file making it exit early?
