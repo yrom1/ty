@@ -50,3 +50,5 @@ rm -rf .venv-test/
 ./ry -3.9 -O -i test-good.py 1 2 3
 ./ry -3.9 -q -O -i test-good.py 1 2 3
 ./ry -3.9 -O -i -q test-good.py 1 2 3
+
+./ry -m mypy test-bad.py

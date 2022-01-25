@@ -74,11 +74,13 @@ _EOT_
   fi
 done
 
-arg_sum=$(( $dash_arg + $m_arg + $c_arg + $file_arg))
-if [[ $arg_sum -gt 1 ]]; then
-  echo 'Error: -c, -m, *.py, - args mutually exclusive' >&2
-  exit 1
-fi
+# This breaks `ry -m mypy main.py` so I'm removing for now:
+#
+# arg_sum=$(( $dash_arg + $m_arg + $c_arg + $file_arg))
+# if [[ $arg_sum -gt 1 ]]; then
+#   echo 'Error: -c, -m, *.py, - args mutually exclusive' >&2
+#   exit 1
+# fi
 
 if ! [ -x "$(command -v py)" ]; then
   echo 'Error: ry depends on py but it is unavailable (see, https://github.com/brettcannon/python-launcher)' >&2
