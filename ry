@@ -111,12 +111,12 @@ if [[ $q_arg -eq 1 ]]
 fi
 
 if [[ $dash_arg -eq 1 ]]; then
-  tty_cmd="$RY $quiet_flag -"
-  if [[ $q_arg -eq 0 ]]; then
-    echo + $tty_cmd
-  fi
-  $tty_cmd
-  exit
+    tty_cmd="$RY $quiet_flag -"
+#   if [[ $q_arg -eq 0 ]]; then
+#     echo + $tty_cmd
+#   fi
+    $tty_cmd
+#   exit
 fi
 
 
