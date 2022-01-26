@@ -116,7 +116,7 @@ if [[ $dash_arg -eq 1 ]]; then
 #     echo + $tty_cmd
 #   fi
     $tty_cmd
-#   exit
+    exit
 fi
 
 
