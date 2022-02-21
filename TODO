@@ -1,0 +1,2 @@
+# TODO change mypy to pyright in variable names
+# TODO remove RY env variable everywhere, just use py
