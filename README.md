@@ -16,10 +16,10 @@ print(sys.argv)
 print(__debug__) # default is True
 ```
 
-After setup, running `ty -i -O test.py 1 2 3` will give:
+After setup, running `ty -i -O test-good.py 1 2 3` will give:
 
 ```
-$ ty -i -O test.py 1 2 3
+$ ty -i -O test-good.py 1 2 3
 + py -m mypy test-good.py
 Success: no issues found in 1 source file
 + py -m isort test-good.py
