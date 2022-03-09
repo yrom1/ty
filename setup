@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -eou pipefail
 
-echo "🐍 setting up folder for ry at /usr/"$USER""
+echo "🐍 setting up folder for ty at /usr/"$USER""
 set -x
 sudo mkdir -p /usr/"$USER"
-sudo cp ry /usr/"$USER"
-sudo chmod +x /usr/"$USER"/ry
+sudo cp ty /usr/"$USER"
+sudo chmod +x /usr/"$USER"/ty
 
 set +x
 echo 🐍 installing requirements
@@ -17,11 +17,11 @@ pip_text="$(py -m pip -q -q -q install -r requirements.txt)"
 pip_status_code=$?
 set -e
 if [[ $pip_status_code -eq 1 ]]; then
-  echo 'Error: cannot install ry requirements' >&2
+  echo 'Error: cannot install ty requirements' >&2
   exit 1
 fi
 
-echo "🐍 adding ry folder /usr/"$USER" to PATH in ~/.bashrc"
+echo "🐍 adding ty folder /usr/"$USER" to PATH in ~/.bashrc"
 set -x
 set +e
 grep -q 'export PATH=\"/usr/\$USER:\$PATH\"' ~/.bashrc
@@ -43,4 +43,4 @@ if [[ $grep_return == 1 ]]; then
 fi
 
 set +xH
-printf "🐍 success! restart terminal to use ry\n"
+printf "🐍 success! restart terminal to use ty\n"
