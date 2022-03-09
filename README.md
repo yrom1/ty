@@ -16,18 +16,18 @@ print(sys.argv)
 print(__debug__) # default is True
 ```
 
-After setup, running `ty -i -O test-good.py 1 2 3` will give:
+After setup, running `ty -i -O test.py 1 2 3` will give:
 
 ```
-$ ty -i -O test-good.py 1 2 3
-+ py -m mypy test-good.py
+$ ty -i -O test.py 1 2 3
++ py -m mypy test.py
 Success: no issues found in 1 source file
-+ py -m isort test-good.py
-+ py -m black test-good.py
++ py -m isort test.py
++ py -m black test.py
 All done! ✨ 🍰 ✨
 1 file left unchanged.
-+ py -i -O test-good.py 1 2 3
-['test-good.py', '1', '2', '3']
++ py -i -O test.py 1 2 3
+['test.py', '1', '2', '3']
 False
 >>>
 ```
