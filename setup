@@ -31,16 +31,5 @@ if [[ $grep_return == 1 ]]; then
     echo "export PATH=\"/usr/\$USER:\$PATH\"" >> ~/.bashrc
 fi
 
-set +x
-echo "🐍 adding RY enviromental variable in ~/.bashrc"
-set -x
-set +e
-grep -q 'export RY=\"py\"' ~/.bashrc
-grep_return=$?
-set -e
-if [[ $grep_return == 1 ]]; then
-    echo "export RY=\"py\"" >> ~/.bashrc
-fi
-
 set +xH
 printf "🐍 success! restart terminal to use ty\n"
