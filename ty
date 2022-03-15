@@ -2,7 +2,7 @@
 set -eou pipefail
 
 shopt -s expand_aliases
-alias set_TY_TYPE_CHECKER="eval $(py parse-toml.py)" >&2
+alias set_TY_TYPE_CHECKER="eval $(py /usr/$USER/parse-toml.py)" >&2
 set_TY_TYPE_CHECKER
 # echo $TY_TYPE_CHECKER
 
