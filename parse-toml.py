@@ -1,10 +1,11 @@
 import getpass
 import pipes
+import sys
 
 import tomli
 
 try:
-    with open(f"/home/ryan/ty/pyproject.toml", "r") as f:
+    with open(f"{sys.argv[1]}/pyproject.toml", "r") as f:
         toml_str = f.read()
 
     toml_dict = tomli.loads(toml_str)
