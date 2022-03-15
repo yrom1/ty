@@ -1,10 +1,13 @@
 import getpass
 import pipes
-
+import sys
 import tomli
 
+TOML_PATH = f"{sys.argv[1]}/pyproject.toml" # $PWD from bash script
+print(TOML_PATH)
+
 try:
-    with open(f"/usr/{getpass.getuser()}/pyproject.toml", "r") as f:
+    with open(TOML_PATH, "r") as f:
         toml_str = f.read()
 
     toml_dict = tomli.loads(toml_str)
