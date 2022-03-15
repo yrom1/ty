@@ -22,15 +22,21 @@ sudo cp parse-toml.py /usr/"$USER"
 #   exit 1
 # fi
 
+export_to_bashrc_if_needed() {
+    set -x
+    set +e
+    grep -q $1 ~/.bashrc
+    grep_return=$?
+    set -e
+    if [[ $grep_return == 1 ]]; then
+        echo $1 >> ~/.bashrc
+    fi
+}
+
 echo "🐍 adding ty folder /usr/"$USER" to PATH in ~/.bashrc"
-set -x
-set +e
-grep -q 'export PATH=\"/usr/\$USER:\$PATH\"' ~/.bashrc
-grep_return=$?
-set -e
-if [[ $grep_return == 1 ]]; then
-    echo "export PATH=\"/usr/\$USER:\$PATH\"" >> ~/.bashrc
-fi
+export_to_bashrc_if_needed "export PATH=\"/usr/\$USER:\$PATH\""
+echo "🐍 setting ENV variables for pip pyright in ~/.bashrc"
+export_to_bashrc_if_needed "PYRIGHT_PYTHON_FORCE_VERSION=\"latest\""
 
 set +xH
 printf "🐍 success! restart terminal to use ty\n"
