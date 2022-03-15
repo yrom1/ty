@@ -1,9 +1,9 @@
 # ty
-`ty` = `mypy` + `isort` + `black` + `py`, in one command.
+`ty` = `mypy|pyright|pytype` + `isort` + `black` + `py`, in one command.
 
 # Usage
 
-You can use the command `ty` to run `mypy`, `isort`, and `black` in the current directoty recursively; Or, you can pass a Python file to `ty` to run `mypy`, `isort`, and `black` on that file, and then execute the file with `python3` (via [py](https://github.com/brettcannon/python-launcher)).
+You can use the command `ty` to run `mypy|pyright|pytype`, `isort`, and `black` in the current directoty recursively; Or, you can pass a Python file to `ty` to run `mypy`, `isort`, and `black` on that file, and then execute the file with `python3` (via [py](https://github.com/brettcannon/python-launcher)).
 
 # Example
 
@@ -63,6 +63,15 @@ False
 >>>
 ```
 
+One can enable using a different type checker with a `pyproject.toml` file:
+
+```
+[tool.ty]
+type_checker = "pyright"
+```
+
+Currently [mypy](http://mypy-lang.org/), [pyright](https://github.com/microsoft/pyright), [pytype](https://google.github.io/pytype/) are supported, `mypy` being the default.
+
 # Setup
 
 `ty` depends on [py](https://github.com/brettcannon/python-launcher) to find the newest python version to use, install `py` first.
@@ -75,3 +84,11 @@ chmod +x setup
 ```
 
 That's it!
+
+Completely optionally... if you want `pyright` to load faster you can install it with `npm`, otherwise `ty` defaults to the slower `pip`'ed installed `pyright`.
+
+# Infrequently Asked Questions (IFAQ)
+
+Q: What does `ty` stand for?
+
+A: `ty` stands for ty~~pe~~ and t~~id~~y.
