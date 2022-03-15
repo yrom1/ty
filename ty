@@ -4,7 +4,7 @@ set -eou pipefail
 shopt -s expand_aliases
 alias set_TY_TYPE_CHECKER="eval $(py parse-toml.py)"
 set_TY_TYPE_CHECKER
-echo $TY_TYPE_CHECKER
+# echo $TY_TYPE_CHECKER
 
 py_version=""
 py_version_arg=0
@@ -92,6 +92,13 @@ if ! [ -x "$(command -v py)" ]; then
   exit 1
 fi
 
+if ! [ -x "$(command -v npx pyright)" ]; then
+    npx_pyright_available=1
+  else
+    npx_pyright_available=0
+fi
+
+
 if [[ $py_version_arg -eq 1 ]]; then
   ty="py $py_version"
 else
@@ -135,7 +142,7 @@ if [[ $c_arg -eq 1 || $m_arg -eq 1 ]]; then
   exit
 fi
 
-run_type_checker () {
+run_type_checker() {
   if [[ "$TY_TYPE_CHECKER" = "" || "$TY_TYPE_CHECKER" = "mypy" ]]; then
     if [[ $q_arg -eq 0 ]]; then
         printf "+ $ty -m mypy --pretty $1\n"
@@ -147,14 +154,25 @@ run_type_checker () {
     set -e
 
   elif [[ "$TY_TYPE_CHECKER" = "pyright" ]]; then
-    if [[ $q_arg -eq 0 ]]; then
-        printf "+ npx pyright $1\n"
-    fi
+    if [[ $npx_pyright_available -eq 1 ]]; then
+      if [[ $q_arg -eq 0 ]]; then
+          printf "+ npx pyright $1\n"
+      fi
 
-    set +e
-    type_checker_output=$(npx pyright $1)
-    type_checker_exit_code=$?
-    set -e
+      set +e
+      type_checker_output=$(npx pyright $1)
+      type_checker_exit_code=$?
+      set -e
+    else
+      if [[ $q_arg -eq 0 ]]; then
+          printf "+ $ty -m pyright $1\n"
+      fi
+
+      set +e
+      type_checker_output=$($ty -m pyright $1)
+      type_checker_exit_code=$?
+      set -e
+    fi
 
   elif [[ "$TY_TYPE_CHECKER" = "pytype" ]]; then
     if [[ $q_arg -eq 0 ]]; then

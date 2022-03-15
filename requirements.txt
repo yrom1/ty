@@ -1,4 +1,6 @@
 mypy
+pyright
+pytype
 black
 isort
 tomli
