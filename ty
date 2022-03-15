@@ -21,13 +21,11 @@ do
   if [[ ${args[$i]} == -h || ${args[$i]} == --help ]]; then
     cat << _EOT_
 Usage: ty [-X | -X.Y] [option] ... [-c cmd | -m mod | file | -] [arg] ...
-ty = mypy + isort + black + py, in one command
+type check and tidy Python files
 
-Without file argument:   Run ty recursively in the current directoty
-With one file argument:  Run ty on the provided file
-
-You can't pass arguments to mypy, isort or black through ty, I use a
-pyproject.toml: https://snarky.ca/what-the-heck-is-pyproject-toml/
+Usage:
+ty         : Run ty recursively in the current directoty
+ty file.py : Run ty on the provided file
 
 Options and arguments:
 -[X]   : launch the latest Python X version (e.g. -3 for the latest Python 3)
