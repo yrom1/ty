@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -eou pipefail
 
+shopt -s expand_aliases
+alias set_TY_TYPE_CHECKER="eval $(py parse-toml.py)"
+set_TY_TYPE_CHECKER
+echo $TY_TYPE_CHECKER
+
 py_version=""
 py_version_arg=0
 V_arg=0
@@ -130,26 +135,50 @@ if [[ $c_arg -eq 1 || $m_arg -eq 1 ]]; then
   exit
 fi
 
+run_type_checker () {
+  if [[ "$TY_TYPE_CHECKER" = "" || "$TY_TYPE_CHECKER" = "mypy" ]]; then
+    if [[ $q_arg -eq 0 ]]; then
+        printf "+ $ty -m mypy --pretty $1\n"
+    fi
 
-run_mypy () {
-  if [[ $q_arg -eq 0 ]]; then
-      printf "+ $ty -m mypy $1\n"
+    set +e
+    type_checker_output=$($ty -m mypy --pretty $1)
+    type_checker_exit_code=$?
+    set -e
+
+  elif [[ "$TY_TYPE_CHECKER" = "pyright" ]]; then
+    if [[ $q_arg -eq 0 ]]; then
+        printf "+ npx pyright $1\n"
+    fi
+
+    set +e
+    type_checker_output=$(npx pyright $1)
+    type_checker_exit_code=$?
+    set -e
+
+  elif [[ "$TY_TYPE_CHECKER" = "pytype" ]]; then
+    if [[ $q_arg -eq 0 ]]; then
+        printf "+ $ty -m pytype $1\n"
+    fi
+
+    set +e
+    type_checker_output=$($ty -m pytype $1)
+    type_checker_exit_code=$?
+    set -e
+
+  else
+    echo "Unknown type_checker set in pyproject.toml"
+    exit 1
   fi
 
-  set +e
-  # not using local so exit code reflects mypy
-  mypy_output=$($ty -m mypy --pretty $1)
-  mypy_exit_code=$?
-  set -e
-
-  if [[ $mypy_exit_code -eq 0 && $q_arg -eq 0 ]]
+  if [[ $type_checker_exit_code -eq 0 && $q_arg -eq 0 ]]
   then
-    printf "$mypy_output\n"
+    printf "$type_checker_output\n"
   fi
 
-  if [[ $mypy_exit_code -eq 1 ]]
+  if [[ $type_checker_exit_code -eq 1 ]]
   then
-    printf "$mypy_output\n"
+    printf "$type_checker_output\n"
     exit 1
   fi
 }
@@ -164,12 +193,12 @@ if [[ $# -eq 0 ]] || \
 [[ $# -eq 1 && ( $q_arg -eq 1 || $py_version_arg -eq 1 ) ]] || \
 [[ $# -eq 2 && ( $q_arg -eq 1 && $py_version_arg -eq 1 ) ]]
   then
-    run_mypy .
+    run_type_checker .
     set_x_if_allowed
     $ty -m isort $quiet_flag .
     $ty -m black $quiet_flag .
   else
-    run_mypy $file
+    run_type_checker $file
     set_x_if_allowed
     $ty -m isort $quiet_flag $file
     $ty -m black $quiet_flag $file

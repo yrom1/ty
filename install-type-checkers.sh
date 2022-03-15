@@ -8,6 +8,7 @@ py -m pip install mypy
 py -m pip install pytype
 
 # - pyright -
+# TODO this can only be ran by root
 # https://www.ubuntuupdates.org/ppa/nodejs_12.x
 curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
 sudo sh -c "echo deb https://deb.nodesource.com/node_12.x impish main > /etc/apt/sources.list.d/nodesource.list"

@@ -6,20 +6,21 @@ set -x
 sudo mkdir -p /usr/"$USER"
 sudo cp ty /usr/"$USER"
 sudo chmod +x /usr/"$USER"/ty
+sudo cp parse-toml.py /usr/"$USER"
 
-set +x
-echo 🐍 installing requirements
-echo + cat requirements.txt
-echo "$(cat requirements.txt)"
-printf "+ py -m pip -q -q -q install -r requirements.txt\n"
-set +e
-pip_text="$(py -m pip -q -q -q install -r requirements.txt)"
-pip_status_code=$?
-set -e
-if [[ $pip_status_code -eq 1 ]]; then
-  echo 'Error: cannot install ty requirements' >&2
-  exit 1
-fi
+# set +x
+# echo 🐍 installing requirements
+# echo + cat requirements.txt
+# echo "$(cat requirements.txt)"
+# printf "+ py -m pip -q -q -q install -r requirements.txt\n"
+# set +e
+# pip_text="$(py -m pip -q -q -q install -r requirements.txt)"
+# pip_status_code=$?
+# set -e
+# if [[ $pip_status_code -eq 1 ]]; then
+#   echo 'Error: cannot install ty requirements' >&2
+#   exit 1
+# fi
 
 echo "🐍 adding ty folder /usr/"$USER" to PATH in ~/.bashrc"
 set -x
