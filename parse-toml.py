@@ -1,10 +1,8 @@
 import getpass
 import pipes
 import sys
-import tomli
 
-TOML_PATH = f"{sys.argv[1]}/pyproject.toml" # $PWD from bash script
-print(TOML_PATH)
+import tomli
 
 try:
     with open(f"{sys.argv[1]}/pyproject.toml", "r") as f:
