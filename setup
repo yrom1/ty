@@ -10,7 +10,6 @@ sudo cp parse-toml.py /usr/"$USER"
 echo 🐍 installing requirements
 echo + cat requirements.txt
 echo "$(cat requirements.txt)"
-printf "+ py -m pip -q -q -q install -r requirements.txt\n"
 set +e
 pip_text="$(py -m pip -q -q -q install -r requirements.txt)"
 pip_status_code=$?
