@@ -73,9 +73,12 @@ _EOT_
 done
 
 shopt -s expand_aliases
-echo + py /usr/$USER/parse-toml.py $(dirname realpath $file)
-alias set_TY_TYPE_CHECKER="eval $(py /usr/$USER/parse-toml.py $(dirname realpath $file))" >&2
+set_TY_TYPE_CHECKER=""
+set +ue
+alias set_TY_TYPE_CHECKER="eval $(py /usr/$USER/parse-toml.py $(dirname realpath $file))"
 set_TY_TYPE_CHECKER
+set -ue
+# >&2
 # echo $TY_TYPE_CHECKER
 
 # This breaks `ty -m mypy main.py` so I'm removing for now:
