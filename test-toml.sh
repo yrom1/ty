@@ -1,6 +1,7 @@
 run_tests() {
     ./ty test-good.py
     ./ty test-bad.py
+    printf "\n\n"
 }
 
 py make-toml.py "mypy"
