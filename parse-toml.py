@@ -7,7 +7,7 @@ TOML_PATH = f"{sys.argv[1]}/pyproject.toml" # $PWD from bash script
 print(TOML_PATH)
 
 try:
-    with open(TOML_PATH, "r") as f:
+    with open(f"{sys.argv[1]}/pyproject.toml", "r") as f:
         toml_str = f.read()
 
     toml_dict = tomli.loads(toml_str)

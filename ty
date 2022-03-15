@@ -72,12 +72,14 @@ _EOT_
   fi
 done
 
-TY_PWD=$(dirname $file)
-REAL_TY_PWD=$(realpath $TY_PWD)
-echo $REAL_TY_PWD
 shopt -s expand_aliases
-alias set_TY_TYPE_CHECKER="eval $(py $REAL_TY_PWD/parse-toml.py $REAL_TY_PWD)" >&2
+set_TY_TYPE_CHECKER=""
+set +ue
+alias set_TY_TYPE_CHECKER="eval $(py /usr/$USER/parse-toml.py $(dirname realpath $file))"
 set_TY_TYPE_CHECKER
+set -ue
+# >&2
+# echo $TY_TYPE_CHECKER
 
 # This breaks `ty -m mypy main.py` so I'm removing for now:
 #
