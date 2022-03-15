@@ -1,2 +1,2 @@
 [tool.ty]
-type_checker = "pyright"
+type_checker = "pytype"

@@ -1,6 +1,11 @@
-#!/usr/bin/env bash
-set -eou pipefail
-shopt -s expand_aliases
-alias set_TY_TYPE_CHECKER="eval $(py parse-toml.py)"
-set_TY_TYPE_CHECKER
-echo $TY_TYPE_CHECKER
+run_tests() {
+    ./ty test-good.py
+    ./ty test-bad.py
+}
+
+py make-toml.py "mypy"
+run_tests
+py make-toml.py "pyright"
+run_tests
+py make-toml.py "pytype"
+run_tests
