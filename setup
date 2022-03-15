@@ -2,13 +2,11 @@
 set -eou pipefail
 
 echo "🐍 setting up folder for ty at /usr/"$USER""
-set -x
 sudo mkdir -p /usr/"$USER"
 sudo cp ty /usr/"$USER"
 sudo chmod +x /usr/"$USER"/ty
 sudo cp parse-toml.py /usr/"$USER"
 
-set +x
 echo 🐍 installing requirements
 echo + cat requirements.txt
 echo "$(cat requirements.txt)"
@@ -23,7 +21,6 @@ if [[ $pip_status_code -eq 1 ]]; then
 fi
 
 echo "🐍 adding ty folder /usr/"$USER" to PATH in ~/.bashrc"
-set -x
 set +e
 grep -q 'export PATH=\"/usr/\$USER:\$PATH\"' ~/.bashrc
 grep_return=$?
@@ -33,7 +30,6 @@ if [[ $grep_return == 1 ]]; then
 fi
 
 echo "🐍 setting ENV variables for pip pyright in ~/.bashrc"
-set -x
 set +e
 grep -q "PYRIGHT_PYTHON_FORCE_VERSION=\"latest\"" ~/.bashrc
 grep_return=$?
@@ -42,5 +38,5 @@ if [[ $grep_return == 1 ]]; then
     echo "PYRIGHT_PYTHON_FORCE_VERSION=\"latest\"" >> ~/.bashrc
 fi
 
-set +xH
+set +H
 printf "🐍 success! restart terminal to use ty\n"
