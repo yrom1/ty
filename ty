@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -eou pipefail
+shopt -s expand_aliases
 
 py_version=""
 py_version_arg=0
@@ -72,14 +73,10 @@ _EOT_
   fi
 done
 
-shopt -s expand_aliases
-set_TY_TYPE_CHECKER=""
 set +ue
 alias set_TY_TYPE_CHECKER="eval $(py /usr/$USER/parse-toml.py $(dirname realpath $file))"
 set_TY_TYPE_CHECKER
 set -ue
-# >&2
-# echo $TY_TYPE_CHECKER
 
 # This breaks `ty -m mypy main.py` so I'm removing for now:
 #
