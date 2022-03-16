@@ -3,7 +3,7 @@
 
 # Usage
 
-You can use the command `ty` to run `mypy`, `isort`, and `black` in the current directoty recursively; Or, you can pass a Python file to `ty` to run `mypy`, `isort`, and `black` on that file, and then execute the file with `python3` (via [py](https://github.com/brettcannon/python-launcher)).
+You can use the command `ty` to run `mypy`, `isort`, and `black` in the current directory recursively; Or, you can pass a Python file to `ty` to run `mypy`, `isort`, and `black` on that file, and then execute the file with `python3` (via [py](https://github.com/brettcannon/python-launcher)).
 
 # Example
 
