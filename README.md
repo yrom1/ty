@@ -81,6 +81,7 @@ Then, to install:
 ```bash
 chmod +x setup
 ./setup
+py -m pip install -r requirements.txt
 ```
 
 That's it!
