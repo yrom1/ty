@@ -1,2 +1,2 @@
 [tool.ty]
-type_checker = "pytype"
+type_checker = "mypy"
