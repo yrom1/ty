@@ -1,5 +1,5 @@
 import sys
 
-a: int = "a"
+# a: int = "a"
 print(sys.argv)
 print(__debug__)
