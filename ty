@@ -21,7 +21,7 @@ type check and tidy Python files
 
 Usage:
 ty         : Run ty recursively in the current directoty
-ty file.py : Run ty on the provided file
+ty file.py : Run ty recursively in the current directoty and run file
 
 Options and arguments:
 -[X]   : launch the latest Python X version (e.g. -3 for the latest Python 3)
@@ -206,19 +206,21 @@ set_x_if_allowed() {
   fi
 }
 
+type_tidy() {
+  run_type_checker .
+  set_x_if_allowed
+  $ty -m isort $quiet_flag .
+  $ty -m black $quiet_flag .
+}
+
+# TODO simplify if condition since refactor
 if [[ $# -eq 0 ]] || \
 [[ $# -eq 1 && ( $q_arg -eq 1 || $py_version_arg -eq 1 ) ]] || \
 [[ $# -eq 2 && ( $q_arg -eq 1 && $py_version_arg -eq 1 ) ]]
   then
-    run_type_checker .
-    set_x_if_allowed
-    $ty -m isort $quiet_flag .
-    $ty -m black $quiet_flag .
+    type_tidy
   else
-    run_type_checker $file
-    set_x_if_allowed
-    $ty -m isort $quiet_flag $file
-    $ty -m black $quiet_flag $file
+    type_tidy
     # Two things:
     # 1) don't pass the quiet flag to python, I'm exploiting
     #    the fact our quiet flag is the same as python's -q
