@@ -84,7 +84,7 @@ chmod +x setup
 py -m pip install -r requirements.txt
 ```
 
-That's it!
+That's it! (For macOS also run `brew install coreutils`).
 
 Completely optionally... if you want `pyright` to load faster you can install it with `npm`, otherwise `ty` defaults to the slower `pip`'ed installed `pyright`.
 
