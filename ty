@@ -74,7 +74,7 @@ _EOT_
 done
 
 set +ue
-alias set_TY_TYPE_CHECKER="eval $(py /usr/$USER/parse-toml.py $(dirname realpath $file))"
+alias set_TY_TYPE_CHECKER="eval $(py /usr/local/ty/parse-toml.py $(dirname realpath $file))"
 set_TY_TYPE_CHECKER
 set -ue
 
