@@ -6,8 +6,6 @@ What happens for namespace packages?
 
 ---
 
-Update `README.md` examples with the new API of always in the current directory.
-Can I use a template engine to make it automatically, does Mako play well with
-shell? Maybe just capture subprocess output?
+Fix the paths in the tests folders using new `example` path
 
 ---
