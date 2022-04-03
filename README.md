@@ -17,17 +17,18 @@ print(sys.argv)
 print(__debug__)
 ```
 
-After setup, running `./ty -O ./examples/good/test-good.py 1 2 3` will give:
+After setup, running `ty -O ./examples/good/test-good.py 1 2 3` will give:
 
 ```
-$ ./ty -O ./examples/good/test-good.py 1 2 3
-+ py -m isort .
-+ py -m black .
+$ ty -O ./examples/good/test-good.py 1 2 3
++ running type checker
+Success: no issues found in 6 source files
++ running isort
+Skipped 3 files
++ running black
 All done! ✨ 🍰 ✨
-8 files left unchanged.
-+ py -O ./examples/good/test-good.py 1 2 3
-+ py -m mypy --pretty .
-Skipped 1 files
+6 files left unchanged.
++ running py
 ['./examples/good/test-good.py', '1', '2', '3']
 False
 ```
@@ -35,22 +36,23 @@ False
 `ty` acts like `py`, passing arguments as expected—with one exception, a bare `ty` will recursively run `ty` in the current directory:
 
 ```
-$ ./ty ./examples/bad/test-bad.py
-+ py -m isort .
-+ py -m black .
+$ ty ./examples/bad/test-bad.py
++ running type checker
+Success: no issues found in 6 source files
++ running isort
+Skipped 3 files
++ running black
 All done! ✨ 🍰 ✨
-8 files left unchanged.
-+ py ./examples/bad/test-bad.py
-+ py -m mypy --pretty .
-Skipped 1 files
+6 files left unchanged.
++ running py
 ['./examples/bad/test-bad.py']
 True
 ```
 
-To access the terminal you can use a `./ty -`:
+To access the terminal you can use a `ty -`:
 
 ```
-$ ./ty -
+$ ty -
 Python 3.10.2 (main, Feb  2 2022, 05:51:25) [Clang 13.0.0 (clang-1300.0.29.3)] on darwin
 Type "help", "copyright", "credits" or "license" for more information.
 >>>
@@ -59,7 +61,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 You can also suppress non-error messages from `mypy`, `black`, `isort`, and `py` with `-q`:
 
 ```
-$ ./ty -O -q ./examples/good/test-good.py 1 2 3
+$ ty -O -q ./examples/good/test-good.py 1 2 3
 ['./examples/good/test-good.py', '1', '2', '3']
 False
 ```

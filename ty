@@ -87,7 +87,7 @@ set -ue
 # fi
 
 if ! [ -x "$(command -v py)" ]; then
-  echo 'Error: ty depends on py but it is unavailable (see, https://github.com/brettcannon/python-launcher)' >&2
+  echo 'ERROR: ty depends on py but it is unavailable (see, https://github.com/brettcannon/python-launcher)' >&2
   exit 1
 fi
 
@@ -142,49 +142,36 @@ if [[ $c_arg -eq 1 || $m_arg -eq 1 ]]; then
 fi
 
 run_type_checker() {
+  if [[ $q_arg -eq 0 ]]; then
+    printf "+ running type checker\n"
+  fi
   if [[ "$TY_TYPE_CHECKER" = "" || "$TY_TYPE_CHECKER" = "mypy" ]]; then
-    if [[ $q_arg -eq 0 ]]; then
-        printf "+ $ty -m mypy --pretty $1\n"
-    fi
-
     set +e
-    type_checker_output=$($ty -m mypy --pretty $1)
+    type_checker_output=$($ty -m mypy --pretty .)
     type_checker_exit_code=$?
     set -e
 
   elif [[ "$TY_TYPE_CHECKER" = "pyright" ]]; then
     if [[ $npx_pyright_available -eq 1 ]]; then
-      if [[ $q_arg -eq 0 ]]; then
-          printf "+ npx pyright $1\n"
-      fi
-
       set +e
-      type_checker_output=$(npx pyright $1)
+      type_checker_output=$(npx pyright .)
       type_checker_exit_code=$?
       set -e
     else
-      if [[ $q_arg -eq 0 ]]; then
-          printf "+ $ty -m pyright $1\n"
-      fi
-
       set +e
-      type_checker_output=$($ty -m pyright $1)
+      type_checker_output=$($ty -m pyright .)
       type_checker_exit_code=$?
       set -e
     fi
 
   elif [[ "$TY_TYPE_CHECKER" = "pytype" ]]; then
-    if [[ $q_arg -eq 0 ]]; then
-        printf "+ $ty -m pytype $1\n"
-    fi
-
     set +e
-    type_checker_output=$($ty -m pytype $1)
+    type_checker_output=$($ty -m pytype .)
     type_checker_exit_code=$?
     set -e
 
   else
-    echo "Unknown type_checker set in pyproject.toml"
+    echo "ERROR: Unknown type_checker set in pyproject.toml" >&2
     exit 1
   fi
 
@@ -195,21 +182,21 @@ run_type_checker() {
 
   if [[ $type_checker_exit_code -eq 1 ]]
   then
-    printf "$type_checker_output\n"
+    printf "$type_checker_output\n" >&2
     exit 1
-  fi
-}
-
-set_x_if_allowed() {
-  if [[ $q_arg -eq 0 ]]; then
-      set -x
   fi
 }
 
 type_tidy() {
   run_type_checker .
-  set_x_if_allowed
+  if [[ $q_arg -eq 0 ]]; then
+    printf "+ running isort\n"
+  fi
   $ty -m isort $quiet_flag .
+
+  if [[ $q_arg -eq 0 ]]; then
+    printf "+ running black\n"
+  fi
   $ty -m black $quiet_flag .
 }
 
@@ -228,5 +215,8 @@ if [[ $# -eq 0 ]] || \
     # 2) don't pass ty as normal, the version is already in
     #    pre_file_args so you'll double pass that argument
     #    that's why we just use py here
+    if [[ $q_arg -eq 0 ]]; then
+      printf "+ running py\n"
+    fi
     py $pre_file_args $file $post_file_args
 fi

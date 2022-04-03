@@ -1,34 +1,47 @@
 import subprocess
 
 
-def shell_output(cmd: str) -> str:
-    process = subprocess.run(cmd.split(), capture_output=True)
-    return (process.stderr.decode("utf-8") + process.stdout.decode("utf-8")).strip()
-
-
 def file_contents(filename: str) -> str:
     with open(filename, "r") as f:
         ans = f.read()
     return ans.strip()
 
 
+def shell_output(cmd: str) -> str:
+    try:
+        subprocess.run(["rm", "TEMP"])
+    except:
+        pass
+    subprocess.run(["touch", "TEMP"])
+    with open("TEMP.sh", "w") as f:
+        f.write(cmd + " >> TEMP 2>&1")
+    subprocess.run(["bash", "TEMP.sh"])
+    ans = file_contents("TEMP")
+    print("\n\n\n\n", ans)
+    return ans
+
+
 EXAMPLE_GOOD_CMD = "./ty -O ./examples/good/test-good.py 1 2 3"
-EXAMPLE_GOOD_OUTPUT = shell_output(EXAMPLE_GOOD_CMD)
 EXAMPLE_BAD_CMD = "./ty ./examples/bad/test-bad.py"
-EXAMPLE_BAD_OUTPUT = shell_output(EXAMPLE_BAD_CMD)
 EXAMPLE_GOOD_QUIET_CMD = "./ty -O -q ./examples/good/test-good.py 1 2 3"
+
+EXAMPLE_GOOD_OUTPUT = shell_output(EXAMPLE_GOOD_CMD)
+EXAMPLE_BAD_OUTPUT = shell_output(EXAMPLE_BAD_CMD)
 EXAMPLE_GOOD_QUIET_OUTPUT = shell_output(EXAMPLE_GOOD_QUIET_CMD)
+
+# doing this manually for now
 EXAMPLE_TERMINAL_CMD = "./ty -"
 EXAMPLE_TERMINAL_OUTPUT = """
 Python 3.10.2 (main, Feb  2 2022, 05:51:25) [Clang 13.0.0 (clang-1300.0.29.3)] on darwin
 Type "help", "copyright", "credits" or "license" for more information.
 >>>
 """.strip()
+
 FILE_TEST_GOOD = file_contents("./examples/good/test-good.py")
 FILE_META_SETUP = file_contents("./meta_setup.sh")
 FILE_PYPROJECT_TOML = file_contents("./pyproject.toml")
 
-README = rf"""
+README = f"""
 # ty
 `ty` = `mypy|pyright|pytype` + `isort` + `black` + `py`, in one command.
 
@@ -44,31 +57,31 @@ Given this file, `test-good.py` in a folder by itself:
 {FILE_TEST_GOOD}
 ```
 
-After setup, running `{EXAMPLE_GOOD_CMD}` will give:
+After setup, running `{EXAMPLE_GOOD_CMD[2:]}` will give:
 
 ```
-$ {EXAMPLE_GOOD_CMD}
+$ {EXAMPLE_GOOD_CMD[2:]}
 {EXAMPLE_GOOD_OUTPUT}
 ```
 
 `ty` acts like `py`, passing arguments as expected—with one exception, a bare `ty` will recursively run `ty` in the current directory:
 
 ```
-$ {EXAMPLE_BAD_CMD}
+$ {EXAMPLE_BAD_CMD[2:]}
 {EXAMPLE_BAD_OUTPUT}
 ```
 
-To access the terminal you can use a `{EXAMPLE_TERMINAL_CMD}`:
+To access the terminal you can use a `{EXAMPLE_TERMINAL_CMD[2:]}`:
 
 ```
-$ {EXAMPLE_TERMINAL_CMD}
+$ {EXAMPLE_TERMINAL_CMD[2:]}
 {EXAMPLE_TERMINAL_OUTPUT}
 ```
 
 You can also suppress non-error messages from `mypy`, `black`, `isort`, and `py` with `-q`:
 
 ```
-$ {EXAMPLE_GOOD_QUIET_CMD}
+$ {EXAMPLE_GOOD_QUIET_CMD[2:]}
 {EXAMPLE_GOOD_QUIET_OUTPUT}
 ```
 
