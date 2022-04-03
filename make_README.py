@@ -26,7 +26,7 @@ def shell_output(cmd: str, dir = None) -> str:
 
 
 EXAMPLE_GOOD_CMD = "ty -O test-good.py 1 2 3"
-EXAMPLE_BAD_CMD = "ty test-bad.py"
+EXAMPLE_BAD_CMD = "ty"
 EXAMPLE_GOOD_QUIET_CMD = "ty -O -q test-good.py 1 2 3"
 
 EXAMPLE_GOOD_OUTPUT = shell_output(EXAMPLE_GOOD_CMD, './examples/good/')
@@ -61,31 +61,31 @@ Given this file, `test-good.py` in a folder by itself:
 {FILE_TEST_GOOD}
 ```
 
-After setup, running `{EXAMPLE_GOOD_CMD[2:]}` will give:
+After setup, running `{EXAMPLE_GOOD_CMD}` will give:
 
 ```
-$ {EXAMPLE_GOOD_CMD[2:]}
+$ {EXAMPLE_GOOD_CMD}
 {EXAMPLE_GOOD_OUTPUT}
 ```
 
 `ty` acts like `py`, passing arguments as expected—with one exception, a bare `ty` will recursively run `ty` in the current directory:
 
 ```
-$ {EXAMPLE_BAD_CMD[2:]}
+$ {EXAMPLE_BAD_CMD}
 {EXAMPLE_BAD_OUTPUT}
 ```
 
-To access the terminal you can use a `{EXAMPLE_TERMINAL_CMD[2:]}`:
+To access the terminal you can use a `{EXAMPLE_TERMINAL_CMD}`:
 
 ```
-$ {EXAMPLE_TERMINAL_CMD[2:]}
+$ {EXAMPLE_TERMINAL_CMD}
 {EXAMPLE_TERMINAL_OUTPUT}
 ```
 
 You can also suppress non-error messages from `mypy`, `black`, `isort`, and `py` with `-q`:
 
 ```
-$ {EXAMPLE_GOOD_QUIET_CMD[2:]}
+$ {EXAMPLE_GOOD_QUIET_CMD}
 {EXAMPLE_GOOD_QUIET_OUTPUT}
 ```
 

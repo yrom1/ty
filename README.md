@@ -17,10 +17,10 @@ print(sys.argv)
 print(__debug__)
 ```
 
-After setup, running ` -O test-good.py 1 2 3` will give:
+After setup, running `ty -O test-good.py 1 2 3` will give:
 
 ```
-$  -O test-good.py 1 2 3
+$ ty -O test-good.py 1 2 3
 + py -m mypy --pretty .
 Success: no issues found in 1 source file
 + py -m isort .
@@ -36,7 +36,7 @@ False
 `ty` acts like `py`, passing arguments as expected—with one exception, a bare `ty` will recursively run `ty` in the current directory:
 
 ```
-$  test-bad.py
+$ ty
 + py -m mypy --pretty .
 test-bad.py:3: error: Incompatible types in assignment (expression has type
 "str", variable has type "int")
@@ -45,10 +45,10 @@ test-bad.py:3: error: Incompatible types in assignment (expression has type
 Found 1 error in 1 file (checked 1 source file)
 ```
 
-To access the terminal you can use a ` -`:
+To access the terminal you can use a `ty -`:
 
 ```
-$  -
+$ ty -
 Python 3.10.2 (main, Feb  2 2022, 05:51:25) [Clang 13.0.0 (clang-1300.0.29.3)] on darwin
 Type "help", "copyright", "credits" or "license" for more information.
 >>>
@@ -57,7 +57,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 You can also suppress non-error messages from `mypy`, `black`, `isort`, and `py` with `-q`:
 
 ```
-$  -O -q test-good.py 1 2 3
+$ ty -O -q test-good.py 1 2 3
 ['test-good.py', '1', '2', '3']
 False
 ```
