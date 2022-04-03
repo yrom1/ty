@@ -1,5 +1,5 @@
 import subprocess
-
+import os
 
 def file_contents(filename: str) -> str:
     with open(filename, "r") as f:
@@ -7,7 +7,9 @@ def file_contents(filename: str) -> str:
     return ans.strip()
 
 
-def shell_output(cmd: str) -> str:
+def shell_output(cmd: str, dir = None) -> str:
+    cwd = os.getcwd()
+    os.chdir(dir)
     try:
         subprocess.run(["rm", "TEMP"])
     except:
@@ -18,19 +20,21 @@ def shell_output(cmd: str) -> str:
     subprocess.run(["bash", "TEMP.sh"])
     ans = file_contents("TEMP")
     print("\n\n\n\n", ans)
+    subprocess.run(['rm', 'TEMP', 'TEMP.sh'])
+    os.chdir(cwd)
     return ans
 
 
-EXAMPLE_GOOD_CMD = "./ty -O ./examples/good/test-good.py 1 2 3"
-EXAMPLE_BAD_CMD = "./ty ./examples/bad/test-bad.py"
-EXAMPLE_GOOD_QUIET_CMD = "./ty -O -q ./examples/good/test-good.py 1 2 3"
+EXAMPLE_GOOD_CMD = "ty -O test-good.py 1 2 3"
+EXAMPLE_BAD_CMD = "ty test-bad.py"
+EXAMPLE_GOOD_QUIET_CMD = "ty -O -q test-good.py 1 2 3"
 
-EXAMPLE_GOOD_OUTPUT = shell_output(EXAMPLE_GOOD_CMD)
-EXAMPLE_BAD_OUTPUT = shell_output(EXAMPLE_BAD_CMD)
-EXAMPLE_GOOD_QUIET_OUTPUT = shell_output(EXAMPLE_GOOD_QUIET_CMD)
+EXAMPLE_GOOD_OUTPUT = shell_output(EXAMPLE_GOOD_CMD, './examples/good/')
+EXAMPLE_BAD_OUTPUT = shell_output(EXAMPLE_BAD_CMD, './examples/bad/')
+EXAMPLE_GOOD_QUIET_OUTPUT = shell_output(EXAMPLE_GOOD_QUIET_CMD, './examples/good/')
 
 # doing this manually for now
-EXAMPLE_TERMINAL_CMD = "./ty -"
+EXAMPLE_TERMINAL_CMD = "ty -"
 EXAMPLE_TERMINAL_OUTPUT = """
 Python 3.10.2 (main, Feb  2 2022, 05:51:25) [Clang 13.0.0 (clang-1300.0.29.3)] on darwin
 Type "help", "copyright", "credits" or "license" for more information.

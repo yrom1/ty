@@ -17,42 +17,38 @@ print(sys.argv)
 print(__debug__)
 ```
 
-After setup, running `ty -O ./examples/good/test-good.py 1 2 3` will give:
+After setup, running ` -O test-good.py 1 2 3` will give:
 
 ```
-$ ty -O ./examples/good/test-good.py 1 2 3
-+ running type checker
-Success: no issues found in 6 source files
-+ running isort
-Skipped 3 files
-+ running black
+$  -O test-good.py 1 2 3
++ py -m mypy --pretty .
+Success: no issues found in 1 source file
++ py -m isort .
+Skipped 1 files
++ py -m black .
 All done! ✨ 🍰 ✨
-6 files left unchanged.
-+ running py
-['./examples/good/test-good.py', '1', '2', '3']
+1 file left unchanged.
++ py -O test-good.py 1 2 3
+['test-good.py', '1', '2', '3']
 False
 ```
 
 `ty` acts like `py`, passing arguments as expected—with one exception, a bare `ty` will recursively run `ty` in the current directory:
 
 ```
-$ ty ./examples/bad/test-bad.py
-+ running type checker
-Success: no issues found in 6 source files
-+ running isort
-Skipped 3 files
-+ running black
-All done! ✨ 🍰 ✨
-6 files left unchanged.
-+ running py
-['./examples/bad/test-bad.py']
-True
+$  test-bad.py
++ py -m mypy --pretty .
+test-bad.py:3: error: Incompatible types in assignment (expression has type
+"str", variable has type "int")
+    a: int = "a"
+             ^
+Found 1 error in 1 file (checked 1 source file)
 ```
 
-To access the terminal you can use a `ty -`:
+To access the terminal you can use a ` -`:
 
 ```
-$ ty -
+$  -
 Python 3.10.2 (main, Feb  2 2022, 05:51:25) [Clang 13.0.0 (clang-1300.0.29.3)] on darwin
 Type "help", "copyright", "credits" or "license" for more information.
 >>>
@@ -61,8 +57,8 @@ Type "help", "copyright", "credits" or "license" for more information.
 You can also suppress non-error messages from `mypy`, `black`, `isort`, and `py` with `-q`:
 
 ```
-$ ty -O -q ./examples/good/test-good.py 1 2 3
-['./examples/good/test-good.py', '1', '2', '3']
+$  -O -q test-good.py 1 2 3
+['test-good.py', '1', '2', '3']
 False
 ```
 
