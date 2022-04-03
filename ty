@@ -20,8 +20,8 @@ Usage: ty [-X | -X.Y] [option] ... [-c cmd | -m mod | file | -] [arg] ...
 type check and tidy Python files
 
 Usage:
-ty         : Run ty recursively in the current directoty
-ty file.py : Run ty recursively in the current directoty and run file
+ty         : Run ty recursively in the current directory
+ty file.py : Run ty recursively in the current directory and run file
 
 Options and arguments:
 -[X]   : launch the latest Python X version (e.g. -3 for the latest Python 3)
