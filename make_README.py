@@ -2,22 +2,31 @@ import subprocess
 
 
 def shell_output(cmd: str) -> str:
-    ans = subprocess.run(cmd.split(), capture_output=True)
-    return ans.stdout + ans.stderr
+    process = subprocess.run(cmd.split(), capture_output=True)
+    return (process.stderr.decode("utf-8") + process.stdout.decode("utf-8")).strip()
 
 
-EXAMPLE_GOOD_CMD = "./ty -i -O ./examples/good/test-good.py 1 2 3"
+def file_contents(filename: str) -> str:
+    with open(filename, "r") as f:
+        ans = f.read()
+    return ans.strip()
+
+
+EXAMPLE_GOOD_CMD = "./ty -O ./examples/good/test-good.py 1 2 3"
 EXAMPLE_GOOD_OUTPUT = shell_output(EXAMPLE_GOOD_CMD)
 EXAMPLE_BAD_CMD = "./ty ./examples/bad/test-bad.py"
 EXAMPLE_BAD_OUTPUT = shell_output(EXAMPLE_BAD_CMD)
-EXAMPLE_GOOD_QUIET_CMD = "./ty -i -O -q ./examples/good/test-good.py 1 2 3"
+EXAMPLE_GOOD_QUIET_CMD = "./ty -O -q ./examples/good/test-good.py 1 2 3"
 EXAMPLE_GOOD_QUIET_OUTPUT = shell_output(EXAMPLE_GOOD_QUIET_CMD)
 EXAMPLE_TERMINAL_CMD = "./ty -"
-EXAMPLE_TERMINAL_OUTPUT = shell_output(EXAMPLE_TERMINAL_CMD)
-
-
-with open("meta_setup.sh", "r") as f:
-    META_SETUP = f.read()
+EXAMPLE_TERMINAL_OUTPUT = """
+Python 3.10.2 (main, Feb  2 2022, 05:51:25) [Clang 13.0.0 (clang-1300.0.29.3)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+""".strip()
+FILE_TEST_GOOD = file_contents("./examples/good/test-good.py")
+FILE_META_SETUP = file_contents("./meta_setup.sh")
+FILE_PYPROJECT_TOML = file_contents("./pyproject.toml")
 
 README = rf"""
 # ty
@@ -29,16 +38,13 @@ You can use the command `ty` to run `mypy`, `isort`, and `black` in the current 
 
 # Example
 
-Given this file, `test.py` in a folder by itself:
+Given this file, `test-good.py` in a folder by itself:
 
 ```py
-import sys
-
-print(sys.argv)
-print(__debug__) # default is True
+{FILE_TEST_GOOD}
 ```
 
-After setup, running `ty -i -O test.py 1 2 3` will give:
+After setup, running `{EXAMPLE_GOOD_CMD}` will give:
 
 ```
 $ {EXAMPLE_GOOD_CMD}
@@ -52,14 +58,11 @@ $ {EXAMPLE_BAD_CMD}
 {EXAMPLE_BAD_OUTPUT}
 ```
 
-To access the terminal you can use a `-`:
+To access the terminal you can use a `{EXAMPLE_TERMINAL_CMD}`:
 
 ```
-$ ty -
-Python 3.8.10 (default, Nov 26 2021, 20:14:08)
-[GCC 9.3.0] on linux
-Type "help", "copyright", "credits" or "license" for more information.
->>>
+$ {EXAMPLE_TERMINAL_CMD}
+{EXAMPLE_TERMINAL_OUTPUT}
 ```
 
 You can also suppress non-error messages from `mypy`, `black`, `isort`, and `py` with `-q`:
@@ -72,8 +75,7 @@ $ {EXAMPLE_GOOD_QUIET_CMD}
 One can enable using a different type checker with a `pyproject.toml` file:
 
 ```
-[tool.ty]
-type_checker = "pyright"
+{FILE_PYPROJECT_TOML}
 ```
 
 Currently [mypy](http://mypy-lang.org/), [pyright](https://github.com/microsoft/pyright), [pytype](https://google.github.io/pytype/) are supported, `mypy` being the default.
@@ -85,14 +87,14 @@ Currently [mypy](http://mypy-lang.org/), [pyright](https://github.com/microsoft/
 Then, to install:
 
 ```bash
-{META_SETUP}
+{FILE_META_SETUP}
 ```
 
 That's it! (For macOS also run `brew install coreutils`).
 
 Completely optionally... if you want `pyright` to load faster you can install it with `npm`, otherwise `ty` defaults to the slower `pip`'ed installed `pyright`.
 
-# Infrequently Asked Questions (IFAQ)
+# In-Frequently Asked Questions (IFAQ)
 
 Q: What does `ty` stand for?
 
