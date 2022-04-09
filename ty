@@ -143,7 +143,7 @@ fi
 
 run_type_checker() {
   if [[ $q_arg -eq 0 ]]; then
-    printf "+ running type checker\n"
+    printf "+ type checking\n"
   fi
   if [[ "$TY_TYPE_CHECKER" = "" || "$TY_TYPE_CHECKER" = "mypy" ]]; then
     set +e
@@ -190,12 +190,12 @@ run_type_checker() {
 type_tidy() {
   run_type_checker .
   if [[ $q_arg -eq 0 ]]; then
-    printf "+ running isort\n"
+    printf "+ sorting imports\n"
   fi
   $ty -m isort $quiet_flag .
 
   if [[ $q_arg -eq 0 ]]; then
-    printf "+ running black\n"
+    printf "+ formatting files\n"
   fi
   $ty -m black $quiet_flag .
 }
@@ -216,7 +216,7 @@ if [[ $# -eq 0 ]] || \
     #    pre_file_args so you'll double pass that argument
     #    that's why we just use py here
     if [[ $q_arg -eq 0 ]]; then
-      printf "+ running py\n"
+      printf "+ executing python\n"
     fi
     py $pre_file_args $file $post_file_args
 fi
