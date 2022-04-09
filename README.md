@@ -21,14 +21,14 @@ After setup, running `ty -O test-good.py 1 2 3` will give:
 
 ```
 $ ty -O test-good.py 1 2 3
-+ running type checker
++ type checking
 Success: no issues found in 1 source file
-+ running isort
++ sorting imports
 Skipped 1 files
-+ running black
++ formatting files
 All done! ✨ 🍰 ✨
 1 file left unchanged.
-+ running py
++ executing python
 ['test-good.py', '1', '2', '3']
 False
 ```
@@ -37,7 +37,7 @@ False
 
 ```
 $ ty
-+ running type checker
++ type checking
 test-bad.py:3: error: Incompatible types in assignment (expression has type
 "str", variable has type "int")
     a: int = "a"
@@ -78,7 +78,7 @@ Currently [mypy](http://mypy-lang.org/), [pyright](https://github.com/microsoft/
 Then, to install:
 
 ```bash
-chmod +x setup
+chmod +x setup.sh
 ./setup.sh
 py -m pip install -r requirements.txt
 ```
