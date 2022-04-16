@@ -46,7 +46,7 @@ FILE_META_SETUP = file_contents("./meta_setup.sh")
 FILE_PYPROJECT_TOML = file_contents("./pyproject.toml")
 
 README = f"""
-# ty
+# ty 🦆🧹
 `ty` = `mypy|pyright|pytype` + `isort` + `black` + `py`, in one command.
 
 # Usage

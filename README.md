@@ -1,4 +1,4 @@
-# ty
+# ty 🦆🧹
 `ty` = `mypy|pyright|pytype` + `isort` + `black` + `py`, in one command.
 
 # Usage
