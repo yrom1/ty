@@ -1,13 +1,14 @@
 import subprocess
 import os
 
+
 def file_contents(filename: str) -> str:
     with open(filename, "r") as f:
         ans = f.read()
     return ans.strip()
 
 
-def shell_output(cmd: str, dir = None) -> str:
+def shell_output(cmd: str, dir=None) -> str:
     cwd = os.getcwd()
     os.chdir(dir)
     try:
@@ -20,7 +21,7 @@ def shell_output(cmd: str, dir = None) -> str:
     subprocess.run(["bash", "TEMP.sh"])
     ans = file_contents("TEMP")
     print("\n\n\n\n", ans)
-    subprocess.run(['rm', 'TEMP', 'TEMP.sh'])
+    subprocess.run(["rm", "TEMP", "TEMP.sh"])
     os.chdir(cwd)
     return ans
 
@@ -29,9 +30,9 @@ EXAMPLE_GOOD_CMD = "ty -O test-good.py 1 2 3"
 EXAMPLE_BAD_CMD = "ty"
 EXAMPLE_GOOD_QUIET_CMD = "ty -O -q test-good.py 1 2 3"
 
-EXAMPLE_GOOD_OUTPUT = shell_output(EXAMPLE_GOOD_CMD, './examples/good/')
-EXAMPLE_BAD_OUTPUT = shell_output(EXAMPLE_BAD_CMD, './examples/bad/')
-EXAMPLE_GOOD_QUIET_OUTPUT = shell_output(EXAMPLE_GOOD_QUIET_CMD, './examples/good/')
+EXAMPLE_GOOD_OUTPUT = shell_output(EXAMPLE_GOOD_CMD, "./examples/good/")
+EXAMPLE_BAD_OUTPUT = shell_output(EXAMPLE_BAD_CMD, "./examples/bad/")
+EXAMPLE_GOOD_QUIET_OUTPUT = shell_output(EXAMPLE_GOOD_QUIET_CMD, "./examples/good/")
 
 # doing this manually for now
 EXAMPLE_TERMINAL_CMD = "ty -"
@@ -121,3 +122,7 @@ A: `ty` stands for ty~~pe~~ and t~~id~~y.
 if __name__ == "__main__":
     with open("README.md", "w") as f:
         f.write(README.strip())
+    print(
+        "WARNING: This uses the *systems* ty, not the local one.\n"
+        "Make sure to update the system ty before running this file!"
+    )
