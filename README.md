@@ -21,14 +21,14 @@ After setup, running `ty -O test-good.py 1 2 3` will give:
 
 ```
 $ ty -O test-good.py 1 2 3
-+ type checking
+🦆🧹 type checking
 Success: no issues found in 1 source file
-+ sorting imports
+🦆🧹 sorting imports
 Skipped 1 files
-+ formatting files
+🦆🧹 formatting files
 All done! ✨ 🍰 ✨
 1 file left unchanged.
-+ executing python
+🦆🧹 executing python
 ['test-good.py', '1', '2', '3']
 False
 ```
@@ -37,7 +37,7 @@ False
 
 ```
 $ ty
-+ type checking
+🦆🧹 type checking
 test-bad.py:3: error: Incompatible types in assignment (expression has type
 "str", variable has type "int")
     a: int = "a"
