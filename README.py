@@ -1,5 +1,5 @@
-import subprocess
 import os
+import subprocess
 
 
 def file_contents(filename: str) -> str:
